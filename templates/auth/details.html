@@ -1,0 +1,557 @@
+{% extends 'nav.html' %}
+{% load static %}
+{% block title %}
+    {{ car.name }}
+{% endblock %}
+{% block style %}
+    <style>
+        .filter-inner img {
+            height: 156px;
+            width: 262px;
+            display: block;
+        }
+
+        .fa-thumbs-up, .fa-thumbs-down {
+            font-size: 25px;
+        }
+
+        .car-info h5 {
+            margin-left: 2px;
+            font-size: 25px;
+        }
+
+        .car-info li {
+            margin-right: 6px;
+        }
+    </style>
+
+{% endblock %}
+{% block body %}
+    <!--Content Section Start-->
+    <div id="content">
+        <section class="banner2 banner-margin-zero">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 ">
+                        <h1>{{ car.name }}</h1>
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <ol class="breadcrumb">
+                            <li>
+                                <a href="{% url 'home:home' %}">خانه </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'home:cars' %}"> اتومبیل ها </a>
+                            </li>
+                            <li class="active">
+                                جزئیات
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="car-view-slider">
+            <div class="container">
+
+                <div class="vehicles-head clearfix">
+                    <h5>{{ car.name }}</h5>
+                    <a href="{% url 'home:home' %}" class="get-back-home">برگرد<i class="fa fa-home"
+                                                                                  aria-hidden="true"></i></a>
+                </div>
+
+                <div class="rental-car">
+                    <div class="car-parts-slider-outer ">
+                        <div class="car-parts-slider owl-carousel">
+                            <div class="item">
+                                <img src="{{ car.image_2.url }}"
+                                     alt="{{ car.name }}">
+
+                            </div>
+
+                            {% for img in images %}
+                                <div class="item">
+
+                                    <img src="{{ img.image.url }}" alt="{{ img.name }}" title="{{ img.name }}">
+
+                                </div>
+                            {% endfor %}
+                            {#                            <div class="item">#}
+                            {#                                <img src="../../static/assets/images/MERCEDES-BENZ-C-63-AMG-details-car-3.jpg"#}
+                            {#                                     alt="{{ car.name }}">#}
+                            {#                            </div>#}
+                            {#                            <div class="item">#}
+                            {#                                <img src="../../static/assets/images/MERCEDES-BENZ-C-63-AMG-details-car-4.jpg"#}
+                            {#                                     alt="{{ car.name }}">#}
+                            {#                            </div>#}
+                            {#                            <div class="item">#}
+                            {#                                <img src="../../static/assets/images/MERCEDES-BENZ-C-63-AMG-details-car-5.jpg"#}
+                            {#                                     alt="{{ car.name }}">#}
+                            {#                            </div>#}
+                        </div>
+
+                        <ul class="vehicles-carousal-thumb">
+
+                            <li class="active">
+                                <img width="500px" height="400px" src="{{ car.image_2.url }}"
+                                     alt="{{ car.name }}"/>
+                            </li>
+                            {% for img in images %}
+                                <li>
+
+                                    <img src="{{ img.image.url }}" alt="{{ img.name }}" title="{{ img.name }}">
+
+                                </li>
+                            {% endfor %}
+
+                        </ul>
+                    </div>
+
+                    <div class="car-details-wrap">
+                        <div class="car-details ">
+                            <div class="car-info clearfix">
+                                <span class="start-price-rent"><small> درهم {{ car.unit_price }}</small> <strong>/ در روز</strong></span>
+                                <p><strong>حداقل اجاره 2 روزه | +5٪ مالیات بر ارزش افزوده قابل اعمال است</strong></p>
+
+
+                                <ul class="car-rating">
+                                    <li>
+                                        <a href="{% url 'home:car_dislike' car.id %}"
+                                           class="fa fa-thumbs-down {% if is_like %} disabled {% endif %}">
+                                            <small>{{ car.total_dislike }}</small></a>
+
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'home:car_like' car.id %}"
+                                           class="fa fa-thumbs-up {% if is_dislike %} disabled {% endif %}">
+                                            <small>{{ car.total_like }}</small></a>
+                                    </li>
+
+                                </ul>
+                            </div>
+
+                        </div>
+                        <ul class="car-more-info clearfix">
+                            <li>
+                                <i class="fa fa-car" aria-hidden="true"></i>{{ car.doors }} درب
+                            </li>
+                            <li>
+                                <i class="fa fa-tachometer" aria-hidden="true"></i>بنزین
+                            </li>
+                            <li>
+                                <i class="fa fa-cog" aria-hidden="true"></i>اتوماتیک
+                            </li>
+                            <li>
+                                <i class="fa fa-road" aria-hidden="true"></i>{{ car.mileage_limit }} km
+                            </li>
+                            <li class="orange-btn">
+                                <form method="post" action="{% url 'reserve:add_reserve' car.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit"><i class="fa fa-plus-circle" aria-hidden="true"></i>اجاره کن
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="vehicles-description">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 ">
+                        <div class="feature-description-wrap clearfix">
+                            <div class="social-media-list">
+                                <h4>اشتراک گذاری:</h4>
+                                <ul class="clearfix">
+                                    <li>
+                                        <a href="#" class="fb-link"><i class="fa fa-facebook"
+                                                                       aria-hidden="true"></i></a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="vk-link"><i class="fa fa-vk" aria-hidden="true"></i></a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="linkdin-link"><i class="fa fa-linkedin"
+                                                                            aria-hidden="true"></i></a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="twitter-link"><i class="fa fa-twitter"
+                                                                            aria-hidden="true"></i></a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="pinterest-link"><i class="fa fa-pinterest-p"
+                                                                              aria-hidden="true"></i></a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="googleplus-link"><i class="fa fa-google-plus"
+                                                                               aria-hidden="true"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="tab-list-feature">
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active">
+                                        <a href="#overview" aria-controls="overview" role="tab" data-toggle="tab">بررسی
+                                            اجمالی</a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a href="#features" aria-controls="features" role="tab" data-toggle="tab">امکانات</a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a href="#location" aria-controls="location" role="tab"
+                                           data-toggle="tab">جزئیات</a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-9">
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade in active" id="overview">
+                                <div class="para-related-description">
+                                    <div class="col-md-6">
+                                        <div style="margin-top:5%">
+
+                                            <h5 class="view-title-style">
+                                                قیمت گذاری</h5>
+
+                                            <table class="table table-bordered">
+                                                <tbody>
+                                                <tr style="font-size: 14px;">
+                                                    <th style="width: 120px;color:#ed8323;text-align: right"
+                                                        class="text-color">دوره اجاره
+                                                    </th>
+                                                    <th style="width: 100px;color:#ed8323;text-align: right"
+                                                        class="text-color">قیمت اجاره
+                                                    </th>
+                                                    <th style="width: 120px;color:#ed8323;text-align: right"
+                                                        class="text-color">مسافت
+                                                        پیموده شده
+
+                                                    </th>
+                                                </tr>
+                                                <tr style="font-weight: initial;">
+                                                    <td style="text-align: right">
+                                                        بر اساس روز
+                                                        {#                                                        <span style="color:#4d4d4d;" rel="tooltip"#}
+                                                        {#                                                              data-title="This car is available for a minimum of 2 days on rent by this supplier"#}
+                                                        {#                                                              title=""#}
+                                                        {#                                                              data-original-title="This car is available for a minimum of 2 days on rent by this supplier"><i#}
+                                                        {#                                                                class="fa fa-info-circle text-color"#}
+                                                        {#                                                                style="font-size:16px;"></i></span>#}
+                                                    </td>
+                                                    <td style="text-align: right">
+                                                        درهم {{ car.unit_price }}
+
+                                                    </td>
+                                                    <td style="text-align: right">
+                                                        {{ car.mileage_limit }} km
+                                                    </td>
+                                                </tr>
+
+                                                </tbody>
+                                            </table>
+                                            <p class="hidden-xs" style="font-size:small"><span
+                                                    class="text-small text-center" style="color:#4d4d4d;" rel="tooltip"
+                                                    data-placement="top"
+                                                    data-original-title="As per the VAT Implementation from January 1, 2018 onwards by the UAE Federal Tax Authority"
+                                                    title=""><span>توجه: حداقل 2 روز رزرو، + 5٪ مالیات بر ارزش افزوده قابل اعمال</span></span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-4 common-list-vehicles">
+                                        <h5 class="view-title-style">مشخصات خودرو</h5>
+
+                                        <ul class="list-feature-bullet">
+                                            <li>
+                                                <span>مناسب برای {{ car.seater }} سرنشین</span>
+                                            <li>
+                                                <span>درب: {{ car.doors }}</span>
+                                            </li>
+                                            <li>
+                                                <span>موتور: بنزینی</span>
+                                            </li>
+                                            <li>
+                                                <span>گیربکس اتوماتیک: بله</span>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade" id="features">
+                                <div class="para-related-description">
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-4 common-list-vehicles">
+                                        <h5 class="view-title-style">امکانات</h5>
+                                        <ul class="list-feature-bullet">
+                                            <li>
+                                                <span class="ms-2">
+                                                        {% for info in car.features.all %}
+                                                            {{ info.name }}
+                                                        {% endfor %}
+                                                </span>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade" id="location">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div style="margin-top:5%">
+
+                                            <h5 class="view-title-style">
+                                                جزئیات پیشنهاد :</h5>
+
+                                            <table class="table table-bordered">
+                                                <tbody>
+                                                <tr style="font-size: 14px;">
+                                                    <th style="width: 120px;color:#ed8323;text-align: right"
+                                                        class="text-color">دسته بندی
+                                                    </th>
+                                                    <th style="width: 100px;color:#ed8323;text-align: right"
+                                                        class="text-color">پذیرفته شده
+                                                    </th>
+                                                    <th style="width: 120px;color:#ed8323;text-align: right"
+                                                        class="text-color">تعداد
+                                                    </th>
+                                                </tr>
+                                                <tr style="font-weight: initial;">
+                                                    <td style="text-align: right">
+                                                        {{ car.categories }}
+
+                                                        {#                                                        <span style="color:#4d4d4d;" rel="tooltip"#}
+                                                        {#                                                              data-title="This car is available for a minimum of 2 days on rent by this supplier"#}
+                                                        {#                                                              title=""#}
+                                                        {#                                                              data-original-title="This car is available for a minimum of 2 days on rent by this supplier"><i#}
+                                                        {#                                                                class="fa fa-info-circle text-color"#}
+                                                        {#                                                                style="font-size:16px;"></i></span>#}
+                                                    </td>
+                                                    <td style="text-align: right">
+                                                        کارت به کارت
+
+                                                    </td>
+                                                    <td style="text-align: right">
+                                                        1
+                                                    </td>
+                                                </tr>
+
+                                                </tbody>
+                                            </table>
+                                            <table class="table table-bordered">
+                                                <h5 class="view-title-style">
+                                                    خدمات بیشتر :</h5>
+                                                <tbody>
+                                                {% for extra in car.extras.all %}
+                                                    <tr style="font-size: 14px;">
+
+                                                        <th style="width: 120px;color:#ed8323;text-align: right"
+                                                            class="text-color">
+                                                            {{ extra.name }}
+                                                        </th>
+
+                                                    </tr>
+                                                    <tr style="font-weight: initial;">
+                                                        <td style="text-align: right">
+                                                            {{ extra.cost }} درهم
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                                <tr style="font-size: 14px;">
+
+                                                    <th style="width: 120px;color:#ed8323;text-align: right"
+                                                        class="text-color">
+                                                        super CDW (معافیت از خسارت وارد شده به ماشین)
+                                                    </th>
+
+                                                </tr>
+                                                <tr style="font-weight: initial;">
+                                                    <td style="text-align: right">
+                                                        {{ car.super_CDW }} درهم
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                            <p class="hidden-xs" style="font-size:small"><span
+                                                    class="text-small text-center" style="color:#4d4d4d;" rel="tooltip"
+                                                    data-placement="top"
+                                                    data-original-title="As per the VAT Implementation from January 1, 2018 onwards by the UAE Federal Tax Authority"
+                                                    title=""><span>توجه: حداقل 2 روز رزرو، + 5٪ مالیات بر ارزش افزوده قابل اعمال</span></span>
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="some-short-note">
+									<span class="note">  <i class="fa fa-exclamation-circle"
+                                                            aria-hidden="true"><hr><p
+                                            style="font-size:25px; font-weight: bold; color: #0f3e68">توجه !!!</p></i>
+                                        <hr>
+
+
+                                        <p>1) جریمه سیگار کشیدن داخل خودرو <span style="font-weight: bold; color: red">400</span> درهم</p>
+                                        <p>2) جریمه دریفت <span
+                                                style="font-weight: bold ;color: red">3000</span> درهم</p>
+                                    </span>
+                        </div>
+
+                    </div>
+                    <div class="col-xs-12 col-sm-3">
+
+                        <div class="payment-method payment-vehicles-wrap">
+                            <div class="offer-overlay">
+                                &nbsp;
+                            </div>
+                            <div class="payment-wrap">
+                                <h4><span> روش های</span> پرداخت</h4>
+                                <ul class="payment-list clearfix">
+                                    <li><img src="../../static/assets/images/card1.jpg" alt="">
+                                    </li>
+                                    <li><img src="../../static/assets/images/card2.jpg" alt="">
+                                    </li>
+                                    <li><img src="../../static/assets/images/card3.jpg" alt="">
+                                    </li>
+                                    <li><img src="../../static/assets/images/card4.jpg" alt="">
+                                    </li>
+                                    <li><img src="../../static/assets/images/card5.jpg" alt="">
+                                    </li>
+                                    <li><img src="../../static/assets/images/card6.jpg" alt="">
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="safety-slider owl-carousel">
+                            <div class="item">
+                                <strong class="percent">94%</strong>
+                                <span class="safety">ایمنی اتومبیل</span>
+                            </div>
+                            <div class="item">
+                                <strong class="percent">94%</strong>
+                                <span class="safety">ایمنی اتومبیل</span>
+                            </div>
+                            <div class="item">
+                                <strong class="percent">94%</strong>
+                                <span class="safety">ایمنی اتومبیل</span>
+                            </div>
+                            <div class="item">
+                                <strong class="percent">94%</strong>
+                                <span class="safety">ایمنی اتومبیل</span>
+                            </div>
+                            <div class="item">
+                                <strong class="percent">94%</strong>
+                                <span class="safety">ایمنی اتومبیل</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="populer-vehicles">
+            <div class="container">
+                <div class="populer-head">
+                    <h4 class="h4-24">وسایل نقلیه مشابه</h4>
+                </div>
+
+                <div class="row">
+                    {% for tag in similar %}
+                        <div class="col-sm-6 col-md-3">
+                            <div class="filter-cars">
+
+                                <div class="filter-inner">
+                                    <a href="{% url 'home:detail' tag.id %}"><img src="{{ tag.image.url }}"
+                                                                                  alt="{{ tag.name }}"></a>
+                                    {#                                    <div class="filter-widgets">#}
+                                    {#                                        <strong> <a><i class="fa fa-heart" aria-hidden="true"></i></a> <a><i#}
+                                    {#                                                class="fa fa-refresh" aria-hidden="true"></i></a> <a#}
+                                    {#                                                class="fancybox-button"#}
+                                    {#                                                data-fancybox-group="fancybox-button"#}
+                                    {#                                                href="assets/images/car1.jpg"#}
+                                    {#                                                title=""><i#}
+                                    {#                                                class="fa fa-search-plus" aria-hidden="true"></i></a> </strong>#}
+                                    {#                                    </div>#}
+                                </div>
+                                <div class="filter-car-details clearfix">
+
+                                    <a href="{% url 'home:detail' tag.id %}"><h5>{{ tag.name }}</h5></a>
+                                    <ul class="filter-car-rating clearfix">
+                                        <li>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                        </li>
+                                        <li class="grey-star">
+                                            <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                        </li>
+                                        <li class="grey-star">
+                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                        </li>
+                                    </ul>
+                                    {% if tag.discount %}
+                                        <span><em>درهم {{ tag.unit_price }}</em> <small> درهم{{ tag.total_price }}</small> <strong>/ در روز</strong></span>
+                                    {% else %}
+                                        <span><small> درهم{{ tag.total_price }}</small> <strong>/ در روز</strong></span>
+                                    {% endif %}
+                                </div>
+                                <ul class="filter-car-more-info clearfix">
+                                    <li>
+                                        <i class="fa fa-car" aria-hidden="true"></i>{{ tag.doors }} درب
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-tachometer" aria-hidden="true"></i>بنزین
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-cog" aria-hidden="true"></i>اتوماتیک
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-road" aria-hidden="true"></i>{{ tag.mileage_limit }} km
+                                    </li>
+                                    <li class="orange-btn">
+                                        <a href="#"><i class="fa fa-plus-circle" aria-hidden="true"></i>جزئیات بیشتر</a>
+                                    </li>
+                                </ul>
+
+
+                            </div>
+
+                        </div>
+                    {% endfor %}
+                </div>
+
+
+                <div class="col-xs-12 populer-bdr"></div>
+
+            </div>
+        </section>
+
+    </div>
+    <!--Content Section End-->
+
+{% endblock %}

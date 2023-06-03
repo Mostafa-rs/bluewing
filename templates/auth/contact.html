@@ -1,0 +1,148 @@
+{% extends 'nav.html' %}
+{% load static %}
+{% block title %}
+    Contact Page
+{% endblock %}
+{% block style %}
+{% endblock %}
+{% block body %}
+    <!--Content Section Start-->
+    <div id="content">
+        <section class="banner2 banner-margin-zero">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 ">
+                        <h1>تماس با ما</h1>
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <ol class="breadcrumb">
+                            <li>
+                                <a href="{% url 'home:home' %}">خانه </a>
+                            </li>
+                            <li class="active">
+                                <a href="#">تماس با ما</a>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="about-few-words">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-7">
+                        <h5 class="view-title-style"> درباره ما</h5>
+                        <div class="about-contact-para">
+                            <p>
+                                ما با افتخار در تهران مستقر هستیم ، اما مردم و جامعه ما از سراسر جهان زندگی می کنند و
+                                کار می کنند.
+                            </p>
+                            <p>
+                                ما معتقدیم ایده های خوب سزاوار فرصتی برای رشد هستند. ما اعتقاد داریم که مردم لیاقت این
+                                را دارند که با آنچه دوست دارند زندگی خود را تأمین کنند.
+                            </p>
+                        </div>
+
+                    </div>
+                    <div class="col-xs-12 col-sm-5">
+                        <div class="about-us-quote clearfix">
+                            <figure><img src="{% static 'assets/images/contact-quote.jpg' %}" alt="contact-quote"/>
+                            </figure>
+                            <div class="quote-wrap">
+                                <p>
+                                    بزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشتهت فراوان جامعه و
+                                    متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی
+                                    الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. در این صورت می توان امید
+                                    داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد وزمان
+                                    مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود
+                                    طراحی اساسا مورد استفاده قرار گیرد.
+
+                                </p>
+                            </div>
+                        </div>
+                        <p>
+                            لورم ایپسوم متن ساختگی با تولید سادگی نر شصت و سه درصد گذشته، حال و آرسد وزمان مورد نیاز
+                            شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد
+                            استفاده قرار گیرد.
+
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact-us-map">
+            <div id="map-view1"></div>
+            <div class="contact-us-wrapper contact-page-form">
+                <div class="container">
+                    <div class="map-form-inner">
+                        <h2> تماس با <span>ما</span></h2>
+                        <div class="contact-us">
+                            <form name="contactForm" method="post" action="{% url 'home:contact' %}" novalidate id="contact" class="contact-form">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="input-text-wrap">
+                                            <input type="text" placeholder="نام" id="name" class="contact-name"
+                                                   name="name" required data-ng-model="contactformData.name"
+                                                   data-ng-class="{'error' : contactForm.name.$error.pattern || submit && contactForm.name.$invalid}"/>
+                                            <i class="fa fa-user" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="input-text-wrap">
+                                            <input type="email" placeholder="ایمیل" id="email" class="contact-mail"
+                                                   name="email" required data-ng-model="contactformData.email"
+                                                   data-ng-class="{'error' : contactForm.email.$error.pattern || submit && contactForm.email.$invalid}"/>
+                                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="input-text-wrap">
+                                            <input type="text" placeholder="موضوع" id="sub" class="contact-subject"
+                                                   name="subject" required data-ng-model="contactformData.subject"
+                                                   data-ng-class="{'error' : contactForm.subject.$error.required && contactForm.subject.$blured || submit && contactForm.subject.$invalid}"/>
+                                            <i class="fa fa-dot-circle-o" aria-hidden="true"></i>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <div class="textarea-wrap">
+                                            <textarea placeholder="پیام" id="message" name="message"
+                                                      data-ng-model="contactformData.message" required
+                                                      data-ng-class="{'error' : contactForm.message.$error.required && contactForm.message.$blured || submit && contactForm.message.$invalid}"></textarea>
+                                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <p>
+                                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از
+                                            طراحان گرافیک است.
+
+                                        </p>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <button type="submit" class="orange-btn"
+                                                data-ng-click="submitcontactForm(contactForm.$invalid)"
+                                                data-ng-disabled="submitButtonDisabled">
+                                            <i class="fa fa-plus-circle" aria-hidden="true"></i>ارسال پیام
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                            <div id="contactSuccess" style="display: none;">
+                                <span>سلام با تشکر از نظرات شما ما به زودی پیش شما برخواهم گشت</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+
+    </div>
+    <!--Content Section End-->
+{% endblock %}

@@ -1,0 +1,758 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/images/bluewing-icon.png' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vazir.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/bootstrap.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/bootstrap-rtl.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/settings.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/simple-line-icons.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/font-awesome.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/owl.carousel.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/jquery-ui.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/jquery.timepicker.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/jquery.fancybox.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/jquery.selectBox.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/persianDatepicker.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/jquery.timepicker.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/global.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/responsive.css' %}">
+    <link rel="stylesheet" type="text/less" href="{% static 'assets/css/skin.less' %}">
+    <script src="https://kit.fontawesome.com/0e9562592a.js" crossorigin="anonymous"></script>
+
+
+    {% block style %}{% endblock %}
+</head>
+<body data-ng-app="themeonApp">
+
+
+<!--Page Wrapper Start-->
+<div id="wrapper" class="home">
+
+    <!--Header Section Start-->
+    <header id="header" class="header">
+        <div class="container">
+            <div class="row ">
+                <div class="col-xs-12">
+                    <div class="header-cont clearfix">
+                        {% include 'messages.html' %}
+                        <a href="{% url 'home:home' %}" class="logo"> <img
+                                src="{% static 'assets/images/blue_wing_logo.png' %}"
+                                alt="blue_wing_logo"/>
+                        </a>
+                        <div class="header-info">
+                            <div class="social-content clearfix">
+                                <div class="contact-det hidden-xs">
+                                    <ul>
+                                        <li>
+                                            <a href="#">راهنما</a>/
+                                        </li>
+                                        <li>
+                                            <a href="#">خدمات ما</a>/
+                                        </li>
+                                        <li>
+                                            <a href="#">شریک شوید </a>/
+                                        </li>
+                                        <li>
+                                            <a href="#" dir="ltr">+9714 3355978</a>/
+                                        </li>
+                                        <li>
+                                            <a href="#">info@bluewing.ae</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="social-det">
+                                    <ul>
+                                        <li>
+                                            <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                                        </li>
+                                        <li>
+                                            <a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
+                                        </li>
+                                    </ul>
+                                    <div class="select-box">
+                                        <select class="select">
+                                            <option value="Farsi">Fa</option>
+                                            <option value="English">EN</option>
+                                            <option value="Germany">GR</option>
+                                        </select>
+
+                                    </div>
+                                    {% if user.is_authenticated %}
+                                        <div class="login">
+                                            <a href="{% url 'accounts:logout' %}"><span>خروج</span><i
+                                                    class="fa fa-sign-out"
+                                                    aria-hidden="true"></i></a>
+                                        </div>
+                                        <div class="login">
+                                            <a href="{% url 'accounts:profile' %}"><span>پروفایل</span><i
+                                                    class="fa fa-user"
+                                                    aria-hidden="true"></i></a>
+                                        </div>
+                                        <div class="login">
+                                            <a href="{% url 'reserve:reserve_details' %}"><span>رزرو</span><i
+                                                    class="fa fa-shopping-cart"
+                                                    aria-hidden="true"></i></a>
+                                        </div>
+                                    {% else %}
+                                        <div class="login">
+                                            <a href="{% url 'accounts:login' %}"><span>ورود</span><i class="fa fa-lock"
+                                                                                                     aria-hidden="true"></i></a>
+                                        </div>
+                                        <div class="login">
+                                            <a href="{% url 'accounts:user_register' %}"><span>ثبت نام</span><i
+                                                    class="fa fa-sign-in" aria-hidden="true"></i></a>
+                                        </div>
+                                    {% endif %}
+
+
+                                </div>
+                            </div>
+
+                            <nav class="navbar">
+
+                                <!-- Brand and toggle get grouped for better mobile display -->
+                                <div class="navbar-header">
+                                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                                            data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                                        <span class="sr-only">تغییر پیمایش</span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                    </button>
+                                </div>
+
+                                <!-- Collect the nav links, forms, and other content for toggling -->
+                                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                    <ul class="nav navbar-nav navigation clearfix">
+
+                                        <li class="active">
+                                            <a href="{% url 'home:home' %}">خانه</a>
+                                        </li>
+                                        <li class="drop-down-parent">
+                                            <a href="{% url 'home:our_services' %}">خدمات <i
+                                                    class="fa fa-angle-down fa-2x" aria-hidden="true"></i>
+                                                <i class="fa fa-angle-up fa-2x" aria-hidden="true"></i> </a>
+                                        </li>
+
+                                        <li class="drop-down-parent">
+                                            <a href="{% url 'home:cars' %}">وسایل نقلیه <i
+                                                    class="fa fa-angle-down fa-2x"
+                                                    aria-hidden="true"></i> <i
+                                                    class="fa fa-angle-up fa-2x" aria-hidden="true"></i> </a>
+                                        </li>
+                                        <li>
+                                            <a href="{% url 'home:about_us' %}">درباره ما</a>
+                                        </li>
+
+                                        <li class="drop-down-parent">
+                                            <a href="#">وبلاگ<i class="fa fa-angle-down fa-2x" aria-hidden="true"></i>
+                                                <i class="fa fa-angle-up fa-2x" aria-hidden="true"></i> </a>
+                                        </li>
+                                        <li>
+                                            <a href="{% url 'home:contact' %}">تماس با ما</a>
+                                        </li>
+
+                                    </ul>
+                                    <div class="header-search">
+                                        <i class="fa fa-search" aria-hidden="true"></i>
+                                        <input type="text" class="search-bar" placeholder="Search here..."/>
+                                    </div>
+                                </div><!-- /.navbar-collapse -->
+
+                            </nav>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!--Header Section End-->
+
+    {% block body %}
+
+    {% endblock %}
+
+    {#    <section class="contact-us-wrapper">#}
+    {#        <div class="container">#}
+    {#            <h2>با ما <span>تماس بگیرید</span></h2>#}
+    {#            <div class="contact-us">#}
+    {#                <form name="contactForm" method="post" novalidate id="contact" class="contact-form"#}
+    {#                      data-ng-controller='themeonCtrl'>#}
+    {#                    <div class="row">#}
+    {##}
+    {#                        <div class="col-sm-4">#}
+    {#                            <div class="input-text-wrap">#}
+    {#                                <input type="text" placeholder="نام" id="name" class="contact-name" name="name"#}
+    {#                                       required data-ng-model="contactformData.name"#}
+    {#                                       data-ng-class="{'error' : contactForm.name.$error.pattern || submit && contactForm.name.$invalid}"/>#}
+    {#                                <i class="fa fa-user" aria-hidden="true"></i>#}
+    {#                            </div>#}
+    {#                            <div class="input-text-wrap">#}
+    {#                                <input type="email" placeholder="ایمیل" id="email" class="contact-mail" name="email"#}
+    {#                                       required data-ng-model="contactformData.email"#}
+    {#                                       data-ng-class="{'error' : contactForm.email.$error.pattern || submit && contactForm.email.$invalid}"/>#}
+    {#                                <i class="fa fa-envelope" aria-hidden="true"></i>#}
+    {#                            </div>#}
+    {#                            <div class="input-text-wrap">#}
+    {#                                <input type="text" placeholder="موضوع" id="sub" class="contact-subject"#}
+    {#                                       name="subject" required data-ng-model="contactformData.subject"#}
+    {#                                       data-ng-class="{'error' : contactForm.subject.$error.required && contactForm.subject.$blured || submit && contactForm.subject.$invalid}"/>#}
+    {#                                <i class="fa fa-dot-circle-o" aria-hidden="true"></i>#}
+    {#                            </div>#}
+    {##}
+    {#                        </div>#}
+    {#                        <div class="col-sm-8">#}
+    {#                            <div class="textarea-wrap">#}
+    {#                                    <textarea placeholder="پیام" id="message" name="message"#}
+    {#                                              data-ng-model="contactformData.message" required#}
+    {#                                              data-ng-class="{'error' : contactForm.message.$error.required && contactForm.message.$blured || submit && contactForm.message.$invalid}"></textarea>#}
+    {#                                <i class="fa fa-pencil" aria-hidden="true"></i>#}
+    {#                            </div>#}
+    {##}
+    {#                        </div>#}
+    {##}
+    {#                    </div>#}
+    {#                    <div class="row">#}
+    {#                        <div class="col-sm-4">#}
+    {#                            <p>#}
+    {#                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان#}
+    {#                                گرافیک است.#}
+    {##}
+    {##}
+    {#                            </p>#}
+    {#                        </div>#}
+    {#                        <div class="col-sm-8">#}
+    {#                            <button type="submit" class="orange-btn"#}
+    {#                                    data-ng-click="submitcontactForm(contactForm.$invalid)"#}
+    {#                                    data-ng-disabled="submitButtonDisabled">#}
+    {#                                <i class="fa fa-plus-circle" aria-hidden="true"></i>ارسال پیام#}
+    {#                            </button>#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                </form>#}
+    {#                <div id="contactSuccess" style="display: none;">#}
+    {#								<span>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.#}
+    {##}
+    {#</span>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#            <strong class="some-help">به کمک نیاز دارید؟</strong>#}
+    {#        </div>#}
+    {#    </section>#}
+    {#    <section class="need-help-wrapper">#}
+    {#        <div class="container">#}
+    {#            <div class="row">#}
+    {#                <div class="col-sm-12">#}
+    {#                    <div class="need-help">#}
+    {#                        <i class="fa fa-headphones"> </i>#}
+    {#                        <h2>اگر سوالی دارید <strong> با ما تماس بگیرید</strong></h2>#}
+    {#                        <a href="callto:88001234567">89 89 33 44 - 021</a>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#            <div class="read-blog-wrapper">#}
+    {#                <div class="row">#}
+    {#                    <div class="col-sm-12">#}
+    {#                        <figure>#}
+    {#                            <img src="{% static 'assets/images/comma.png' %}" alt=""/>#}
+    {#                        </figure>#}
+    {#                        <h2><strong> وبلاگ </strong>ما را بخوانید</h2>#}
+    {#                        <p>#}
+    {#                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک#}
+    {#                            است.#}
+    {##}
+    {##}
+    {#                        </p>#}
+    {#                        <p>#}
+    {#                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک#}
+    {#                            است.#}
+    {##}
+    {##}
+    {#                        </p>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {#            </div>#}
+    {##}
+    {#            <div class="read-blog-listing">#}
+    {##}
+    {#                <div class="blog-read-wrap owl-carousel owl-theme" id="blog-slider">#}
+    {#                    <div class="item">#}
+    {#                        <h5>عنوان پست وبلاگ</h5>#}
+    {#                        <p>#}
+    {#                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک#}
+    {#                            است.#}
+    {#                        </p>#}
+    {##}
+    {#                        <div class="blog-date-comment">#}
+    {#                            <span class="blog-date">06 اسفند</span>#}
+    {#                            <span class="blog-favorate"> / 426 <i class="fa fa-heart"#}
+    {#                                                                  aria-hidden="true"></i> </span>#}
+    {#                            <span class="blog-comment"> / 12 <i class="fa fa-commenting"#}
+    {#                                                                aria-hidden="true"></i></span>#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                    <div class="item">#}
+    {#                        <h5>عنوان پست وبلاگ</h5>#}
+    {#                        <p>#}
+    {#                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک#}
+    {#                            است.#}
+    {#                        </p>#}
+    {##}
+    {#                        <div class="blog-date-comment">#}
+    {#                            <span class="blog-date">06 اسفند</span>#}
+    {#                            <span class="blog-favorate"> / 426 <i class="fa fa-heart" aria-hidden="true"></i></span>#}
+    {#                            <span class="blog-comment"> / 12 <i class="fa fa-commenting"#}
+    {#                                                                aria-hidden="true"></i></span>#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                    <div class="item">#}
+    {#                        <h5>عنوان پست وبلاگ</h5>#}
+    {#                        <p>#}
+    {#                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک#}
+    {#                            است.#}
+    {#                        </p>#}
+    {##}
+    {#                        <div class="blog-date-comment">#}
+    {#                            <span class="blog-date">06 اسفند</span>#}
+    {#                            <span class="blog-favorate"> / 426 <i class="fa fa-heart"#}
+    {#                                                                  aria-hidden="true"></i> </span>#}
+    {#                            <span class="blog-comment"> / 12 <i class="fa fa-commenting"#}
+    {#                                                                aria-hidden="true"></i></span>#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                    <div class="item">#}
+    {#                        <h5>عنوان پست وبلاگ</h5>#}
+    {#                        <p>#}
+    {#                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک#}
+    {#                            است.#}
+    {#                        </p>#}
+    {##}
+    {#                        <div class="blog-date-comment">#}
+    {#                            <span class="blog-date">06 اسفند</span>#}
+    {#                            <span class="blog-favorate"> / 426 <i class="fa fa-heart"#}
+    {#                                                                  aria-hidden="true"></i> </span>#}
+    {#                            <span class="blog-comment"> / 12 <i class="fa fa-commenting"#}
+    {#                                                                aria-hidden="true"></i></span>#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                    <div class="item">#}
+    {#                        <h5>عنوان پست وبلاگ</h5>#}
+    {#                        <p>#}
+    {#                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک#}
+    {#                            است.#}
+    {#                        </p>#}
+    {##}
+    {#                        <div class="blog-date-comment">#}
+    {#                            <span class="blog-date">06 اسفند</span>#}
+    {#                            <span class="blog-favorate"> / 426 <i class="fa fa-heart"#}
+    {#                                                                  aria-hidden="true"></i> </span>#}
+    {#                            <span class="blog-comment"> / 12 <i class="fa fa-commenting"#}
+    {#                                                                aria-hidden="true"></i></span>#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                    <div class="item">#}
+    {#                        <h5>عنوان پست وبلاگ</h5>#}
+    {#                        <p>#}
+    {#                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک#}
+    {#                            است.#}
+    {#                        </p>#}
+    {##}
+    {#                        <div class="blog-date-comment">#}
+    {#                            <span class="blog-date">06 اسفند</span>#}
+    {#                            <span class="blog-favorate"> / 426 <i class="fa fa-heart"#}
+    {#                                                                  aria-hidden="true"></i> </span>#}
+    {#                            <span class="blog-comment"> / 12 <i class="fa fa-commenting"#}
+    {#                                                                aria-hidden="true"></i></span>#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                    <div class="item">#}
+    {#                        <h5>عنوان پست وبلاگ</h5>#}
+    {#                        <p>#}
+    {#                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک#}
+    {#                            است.#}
+    {#                        </p>#}
+    {##}
+    {#                        <div class="blog-date-comment">#}
+    {#                            <span class="blog-date">06 اسفند</span>#}
+    {#                            <span class="blog-favorate"> / 426 <i class="fa fa-heart"#}
+    {#                                                                  aria-hidden="true"></i> </span>#}
+    {#                            <span class="blog-comment"> / 12 <i class="fa fa-commenting"#}
+    {#                                                                aria-hidden="true"></i></span>#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                    <div class="item">#}
+    {#                        <h5>عنوان پست وبلاگ</h5>#}
+    {#                        <p>#}
+    {#                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک#}
+    {#                            است.#}
+    {#                        </p>#}
+    {##}
+    {#                        <div class="blog-date-comment">#}
+    {#                            <span class="blog-date">06 اسفند</span>#}
+    {#                            <span class="blog-favorate"> / 426 <i class="fa fa-heart"#}
+    {#                                                                  aria-hidden="true"></i> </span>#}
+    {#                            <span class="blog-comment"> / 12 <i class="fa fa-commenting"#}
+    {#                                                                aria-hidden="true"></i></span>#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                    <div class="item">#}
+    {#                        <h5>عنوان پست وبلاگ</h5>#}
+    {#                        <p>#}
+    {#                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک#}
+    {#                            است.#}
+    {#                        </p>#}
+    {##}
+    {#                        <div class="blog-date-comment">#}
+    {#                            <span class="blog-date">06 اسفند</span>#}
+    {#                            <span class="blog-favorate"> / 426 <i class="fa fa-heart"#}
+    {#                                                                  aria-hidden="true"></i> </span>#}
+    {#                            <span class="blog-comment"> / 12 <i class="fa fa-commenting"#}
+    {#                                                                aria-hidden="true"></i></span>#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {##}
+    {#                </div>#}
+    {##}
+    {#                <a href="#" class="button carousal-btn"><i class="fa fa-newspaper-o" aria-hidden="true"></i>مشاهده#}
+    {#                    همه</a>#}
+    {#            </div>#}
+    {##}
+    {#        </div>#}
+    {#    </section>#}
+    {##}
+    {#    <section class="newsletter-wrap">#}
+    {#        <div class="container">#}
+    {#            <div class="row">#}
+    {#                <div class="col-xs-12 col-sm-5 padding-left-0">#}
+    {#                    <h2>مشترک شدن در <strong>خبرنامه</strong></h2>#}
+    {#                </div>#}
+    {#                <div class="col-xs-12 col-sm-7 ">#}
+    {#                    <form action="#" method="get" class="subscribe-form">#}
+    {#                        <div class="row">#}
+    {#                            <div class="col-xs-12 col-sm-7">#}
+    {#                                <div class="subscriber-info">#}
+    {#                                    <input type="text" name="text" class="newsletter-text"#}
+    {#                                           placeholder="ایمیل خود را وارد کنید"/>#}
+    {#                                    <i class="fa fa-envelope" aria-hidden="true"> </i>#}
+    {#                                </div>#}
+    {##}
+    {#                            </div>#}
+    {#                            <div class="col-xs-12 col-sm-5">#}
+    {#                                <input type="submit" value="ارسال" class="orange-btn"/>#}
+    {#                            </div>#}
+    {#                        </div>#}
+    {#                    </form>#}
+    {#                </div>#}
+    {##}
+    {#            </div>#}
+    {#        </div>#}
+    {##}
+    {#    </section>#}
+
+</div>
+<!--Content Area End-->
+
+
+<!--Footer Section start-->
+<footer id="footer" class="bdr-0">
+    <div class="primary-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-4">
+                    <div class="about-us-footer">
+                        <h5 class="view-title-style">درباره ما</h5>
+                        <p>
+                            ما با افتخار در تهران مستقر هستیم ، اما مردم و جامعه ما از سراسر جهان زندگی می کنند و
+                            کار می کنند.
+                        </p>
+                        <p>
+                            ما معتقدیم ایده های خوب سزاوار فرصتی برای رشد هستند. ما اعتقاد داریم که مردم لیاقت این
+                            را دارند که با آنچه دوست دارند زندگی خود را تأمین کنند.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-4 text-center footer-img-gap">
+                    <a href="{% url 'home:home' %}" class="footer-logo"><img
+                            src="{% static 'assets/images/blue_wing_logo.png' %}"
+                            alt="blue_wing_logo"/></a>
+                </div>
+                <div class="col-xs-12 col-sm-4 text-left contact-info-footer">
+                    <h5 class="view-title-style">با ما تماس بگیرید</h5>
+                    <address>
+                        صندوق پستی: تهران 24584021 <span class="line-break"></span>
+                        آدرس: تهران، بلوار آفریقا، خیابان ظفر<span class="line-break"></span>
+                        کوی نور ، شماره 145 <span class="line-break"></span>
+                        <span class="line-break"></span>
+                        پست الکترونیک:<a href="mailto:mail@letsdrive.com"> mail@letsdrive.com</a><span
+                            class="line-break"></span>
+                        تلفن: <a href="tel:88001234567">89 89 44 33 - 021</a><span class="line-break"></span>
+                        فکس: <a href="fax:80009876543 ">89 89 44 33 - 021 </a><span class="line-break"></span>
+                    </address>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom text-center">
+        <div class="container">
+            <span>&copy; کلیه حقوق محفوظ است ایجاد توسط <a href="#">Bluewing Cars &copy;</a></span>
+        </div>
+    </div>
+
+</footer>
+
+<!--Footer Section End-->
+
+<div class="location-group">
+    <div id="location1">
+        <div id="Locate_1" class="filter-cars">
+            <div class="filter-inner">
+                <img alt="" src="{% static 'assets/images/car13.jpg' %}">
+
+            </div>
+            <div class="filter-car-details clearfix">
+
+                <h5>Volkswagen Golf 2015</h5>
+                <ul class="filter-car-rating clearfix">
+                    <li>
+                        <i aria-hidden="true" class="fa fa-star"></i>
+                    </li>
+                    <li>
+                        <i aria-hidden="true" class="fa fa-star"></i>
+                    </li>
+                    <li>
+                        <i aria-hidden="true" class="fa fa-star"></i>
+                    </li>
+                    <li class="grey-star">
+                        <i aria-hidden="true" class="fa fa-star-half-o"></i>
+                    </li>
+                    <li class="grey-star">
+                        <i aria-hidden="true" class="fa fa-star-o"></i>
+                    </li>
+                </ul>
+                <span>شروع کنید <small> 120 ریال</small> <strong>/ در روز</strong></span>
+
+            </div>
+            <ul class="filter-car-more-info clearfix">
+                <li>
+                    <i aria-hidden="true" class="fa fa-car"></i>2011
+                </li>
+                <li>
+                    <i aria-hidden="true" class="fa fa-tachometer"></i>دیزلی
+                </li>
+                <li>
+                    <i aria-hidden="true" class="fa fa-cog"></i>اتوماتیک
+                </li>
+                <li>
+                    <i aria-hidden="true" class="fa fa-road"></i>15000
+                </li>
+                <li class="orange-btn">
+                    <a href="#"><i aria-hidden="true" class="fa fa-plus-circle"></i>اجاره کن</a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+    <div id="location2">
+        <div id="Locate_2" class="filter-cars">
+            <div class="filter-inner">
+                <img alt="" src="{% static 'assets/images/car13.jpg' %}">
+
+            </div>
+            <div class="filter-car-details clearfix">
+
+                <h5>ولکس واگون گلف 2015</h5>
+                <ul class="filter-car-rating clearfix">
+                    <li>
+                        <i aria-hidden="true" class="fa fa-star"></i>
+                    </li>
+                    <li>
+                        <i aria-hidden="true" class="fa fa-star"></i>
+                    </li>
+                    <li>
+                        <i aria-hidden="true" class="fa fa-star"></i>
+                    </li>
+                    <li class="grey-star">
+                        <i aria-hidden="true" class="fa fa-star-half-o"></i>
+                    </li>
+                    <li class="grey-star">
+                        <i aria-hidden="true" class="fa fa-star-o"></i>
+                    </li>
+                </ul>
+                <span>شروع کنید <small> 120 ریال</small> <strong>/ در روز</strong></span>
+
+            </div>
+            <ul class="filter-car-more-info clearfix">
+                <li>
+                    <i aria-hidden="true" class="fa fa-car"></i>2011
+                </li>
+                <li>
+                    <i aria-hidden="true" class="fa fa-tachometer"></i>دیزلی
+                </li>
+                <li>
+                    <i aria-hidden="true" class="fa fa-cog"></i>اتوماتیک
+                </li>
+                <li>
+                    <i aria-hidden="true" class="fa fa-road"></i>15000
+                </li>
+                <li class="orange-btn">
+                    <a href="#"><i aria-hidden="true" class="fa fa-plus-circle"></i>اجاره کن</a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+    <div id="location3">
+        <div id="Locate_3" class="filter-cars">
+            <div class="filter-inner">
+                <img alt="" src="{% static 'assets/images/car13.jpg' %}">
+
+            </div>
+            <div class="filter-car-details clearfix">
+
+                <h5>Volkswagen Golf 2015</h5>
+                <ul class="filter-car-rating clearfix">
+                    <li>
+                        <i aria-hidden="true" class="fa fa-star"></i>
+                    </li>
+                    <li>
+                        <i aria-hidden="true" class="fa fa-star"></i>
+                    </li>
+                    <li>
+                        <i aria-hidden="true" class="fa fa-star"></i>
+                    </li>
+                    <li class="grey-star">
+                        <i aria-hidden="true" class="fa fa-star-half-o"></i>
+                    </li>
+                    <li class="grey-star">
+                        <i aria-hidden="true" class="fa fa-star-o"></i>
+                    </li>
+                </ul>
+                <span>شروع کنید <small> 120 ریال</small> <strong>/ در روز</strong></span>
+
+            </div>
+            <ul class="filter-car-more-info clearfix">
+                <li>
+                    <i aria-hidden="true" class="fa fa-car"></i>2011
+                </li>
+                <li>
+                    <i aria-hidden="true" class="fa fa-tachometer"></i>دیزلی
+                </li>
+                <li>
+                    <i aria-hidden="true" class="fa fa-cog"></i>اتوماتیک
+                </li>
+                <li>
+                    <i aria-hidden="true" class="fa fa-road"></i>15000
+                </li>
+                <li class="orange-btn">
+                    <a href="#"><i aria-hidden="true" class="fa fa-plus-circle"></i>اجاره کن</a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+    <div id="location4">
+        <div id="Locate_4" class="filter-cars">
+            <div class="filter-inner">
+                <img alt="" src="{% static 'assets/images/car13.jpg' %}">
+
+            </div>
+            <div class="filter-car-details clearfix">
+
+                <h5>Volkswagen Golf 2015</h5>
+                <ul class="filter-car-rating clearfix">
+                    <li>
+                        <i aria-hidden="true" class="fa fa-star"></i>
+                    </li>
+                    <li>
+                        <i aria-hidden="true" class="fa fa-star"></i>
+                    </li>
+                    <li>
+                        <i aria-hidden="true" class="fa fa-star"></i>
+                    </li>
+                    <li class="grey-star">
+                        <i aria-hidden="true" class="fa fa-star-half-o"></i>
+                    </li>
+                    <li class="grey-star">
+                        <i aria-hidden="true" class="fa fa-star-o"></i>
+                    </li>
+                </ul>
+                <span>شروع کنید <small> 120 ریال</small> <strong>/ در روز</strong></span>
+
+            </div>
+            <ul class="filter-car-more-info clearfix">
+                <li>
+                    <i aria-hidden="true" class="fa fa-car"></i>2011
+                </li>
+                <li>
+                    <i aria-hidden="true" class="fa fa-tachometer"></i>دیزلی
+                </li>
+                <li>
+                    <i aria-hidden="true" class="fa fa-cog"></i>اتوماتیک
+                </li>
+                <li>
+                    <i aria-hidden="true" class="fa fa-road"></i>15000
+                </li>
+                <li class="orange-btn">
+                    <a href="#"><i aria-hidden="true" class="fa fa-plus-circle"></i>اجاره کن</a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+</div>
+
+<!--Page Wrapper End-->
+
+
+<script type="text/javascript" src="{% static 'assets/js/angular.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/jquery-1.11.3.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/jquery-ui.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/jquery.timepicker.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/bootstrap.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/less.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/owl.carousel.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/app.js' %}"></script>
+<script src="http://maps.googleapis.com/maps/api/js"></script>
+<script type="text/javascript" src="{% static 'assets/js/jquery.selectBox.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/jquery.fancybox.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/persianDatepicker.min.js' %}"></script>
+
+<!-- revolution slider Js -->
+<script type="text/javascript" src="{% static 'assets/js//jquery.themepunch.tools.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/jquery.themepunch.revolution.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/jquery.revolution.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/extensions/revolution.extension.video.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/extensions/revolution.extension.slideanims.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/extensions/revolution.extension.actions.min.js' %}"></script>
+<script type="text/javascript"
+        src="{% static 'assets/extensions/revolution.extension.layeranimation.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/extensions/revolution.extension.kenburn.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/extensions/revolution.extension.navigation.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/extensions/revolution.extension.migration.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/extensions/revolution.extension.parallax.min.js' %}"></script>
+<!--  revolution slider Js -->
+<!-- map                     -->
+<script type="text/javascript" src="{% static 'assets/js/map.js' %}"></script>
+<!-- map                     -->
+<script type="text/javascript" src="{% static 'assets/js/site.js' %}"></script>
+<script src="{% static 'assets/js/datepicker.js' %}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="{% static 'assets/js/textarea.js' %}"></script>
+<script src="{% static 'assets/js/jquery.js' %}"></script>
+<script src="{% static 'assets/js/jquery.datetimepicker.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+        integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+</body>
+</html>

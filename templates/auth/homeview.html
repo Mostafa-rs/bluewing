@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>homeview</title>
+</head>
+<body>
+<h1>homeview</h1>
+<table class="table table-bordered">
+    <tbody>
+    <tr style="font-size: 14px;">
+        <th style="width: 120px;color:#ed8323;text-align: right"
+            class="text-color">pickup date
+        </th>
+        <th style="width: 100px;color:#ed8323;text-align: right"
+            class="text-color">return date
+        </th>
+        <th style="width: 120px;color:#ed8323;text-align: right"
+            class="text-color">pickup time
+
+        </th>
+        <th style="width: 120px;color:#ed8323;text-align: right"
+            class="text-color">return time
+
+        </th>
+        <th style="width: 120px;color:#ed8323;text-align: right"
+            class="text-color">duration
+
+        </th>
+    </tr>
+    {% for times in query_times %}
+        <tr style="font-weight: initial;">
+            <td style="text-align: right">
+                {{ times.pickup_date }}
+            </td>
+            <td style="text-align: right">
+                {{ times.return_date }}
+            </td>
+            <td style="text-align: right">
+                {{ times.pickup_time }}
+            </td>
+            <td style="text-align: right">
+                {{ times.return_time }}
+            </td>
+            <td style="text-align: right">
+                {{ times.duration }}
+            </td>
+        </tr>
+
+    {% endfor %}
+    </tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,538 @@
+{% extends 'nav.html' %}
+{% block title %}
+    Cars Page
+{% endblock %}
+{% block style %}
+    <style>
+        {#div.filter .drop-down {#}
+        {#    position: absolute;#}
+        {#    right: 12px;#}
+        {#    top: 75px;#}
+        {#    background: #5e382d;#}
+        {#    width: 200px;#}
+        {#    height: 50px;#}
+        {#    opacity: 99999999;#}
+        {#    transition: top 0.3s ease 0s, visibility 0.2s ease 0.2s, opacity 0.2s ease 0.1s;#}
+        {#    visibility: hidden;#}
+        .filter .navigation li a {
+            color: white;
+        }
+
+        .filter .navigation li a:hover {
+            color: #00A0D1;
+        }
+
+        .filter-inner img {
+            height: 156px;
+            width: 262px;
+            display: block;
+        }
+
+        .form-outline {
+            margin-bottom: 20px;
+        }
+
+        .form-outline i {
+            margin-left: 5px;
+        }
+
+        .form-outline input {
+            margin-bottom: 20px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            background-color: #59637e;
+            height: 50px;
+            line-height: 20px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+
+        .form-outline input[type='text'], input[type='email'], input[type='password'] {
+            color: white;
+        }
+
+        .form-outline .btn-info {
+            background-color: #4aaeec;
+        }
+
+        .multi-range, .multi-range * {
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+
+        .multi-range {
+            position: relative;
+            width: 160px;
+            height: 28px;
+            margin-top: 0;
+            margin-right: 90px;
+            margin-left: 16px;
+            margin-bottom: 16px;
+            border: 1px solid #ddd;
+            font-family: monospace;
+            background-color: #00A0D1;
+            color: white;
+        }
+
+        .multi-range > hr {
+            position: absolute;
+            width: 100%;
+            top: 50%;
+        }
+
+        .multi-range > input[type=range] {
+            width: calc(100% - 16px);
+            position: absolute;
+            bottom: 6px;
+            left: 0;
+        }
+
+        .multi-range > input[type=range]:last-of-type {
+            margin-left: 16px;
+        }
+
+        .multi-range > input[type=range]::-webkit-slider-thumb {
+            transform: translateY(-18px);
+        }
+
+        .multi-range > input[type=range]::-webkit-slider-runnable-track {
+            -webkit-appearance: none;
+            height: 0px;
+        }
+
+        .multi-range > input[type=range]::-moz-range-thumb {
+            transform: translateY(-18px);
+        }
+
+        .multi-range > input[type=range]::-moz-range-track {
+            -webkit-appearance: none;
+            height: 0px;
+        }
+
+        .multi-range > input[type=range]::-ms-thumb {
+            transform: translateY(-18px);
+        }
+
+        .multi-range > input[type=range]::-ms-track {
+            -webkit-appearance: none;
+            height: 0px;
+        }
+
+        .multi-range::after {
+            content: attr(data-lbound) ' - ' attr(data-ubound);
+            position: absolute;
+            top: 0;
+            left: 100%;
+            white-space: nowrap;
+            display: block;
+            padding: 0px 4px;
+            margin: -1px 2px;
+            height: 26px;
+            width: auto;
+            border: 1px solid #ddd;
+            font-size: 13px;
+            line-height: 26px;
+        }
+
+        button.search-price {
+            margin: 28px 50px 28px 28px;
+            padding: 7px 12px;
+            font-size: 16px;
+            line-height: 1.5;
+            color: #fff;
+            background: #4aaeec;
+            border: none;
+        }
+
+
+        .vehicle-type-list li label input[type="checkbox"] {
+            position: relative;
+            visibility: visible;
+            opacity: 9;
+            width: 20px;
+            height: 20px;
+            margin-left: 10px;
+        }
+
+    </style>
+{% endblock %}
+{% block body %}
+
+    <!--Content Section Start-->
+    <div id="content">
+        <section class="banner2 banner-margin-zero">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 ">
+                        <h1>صفحه وسایل نقلیه</h1>
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <ol class="breadcrumb">
+                            <li>
+                                <a href="{% url 'home:home' %}">خانه </a>
+                            </li>
+                            {#                            <li>#}
+                            {#                                <a href="#"> نشان </a>#}
+                            {#                            </li>#}
+                            <li class="active">
+                                <a href="{% url 'home:cars' %}">وسایل نقلیه </a>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="all-vehcles-filter">
+            <div class="container">
+                <div class="filter clearfix">
+                    {% for data in category %}
+                        <div class="collapse btn-group">
+                            <ul class="nav navbar-nav navigation clearfix">
+
+                                <li class="drop-down-parent">
+                                    <a href="{{ data.get_absolute_url }}">{{ data.name }} </a>
+                                    {#                                    <ul class="drop-down">#}
+                                    {#                                        {% for info in data.sub.all %}#}
+                                    {#                                            <li>#}
+                                    {#                                                <a style="color: white" class="drop-down-parent" href="{{ info.get_absolute_url }}">{{ info.name }}</a>#}
+                                    {#                                            </li>#}
+                                    {#                                        {% endfor %}#}
+                                    {#                                    </ul>#}
+                                </li>
+
+                            </ul>
+                        </div>
+                    {% endfor %}
+
+
+                    {#                        <select name="body-type">#}
+                    {#                            <option value="1"><a href="{{ data.get_absolute_url }}">{{ data.name }}</a></option>#}
+                    {#                            <select name="body-type">#}
+                    {#                                {% for info in data.sub.all %}#}
+                    {#                                    <option>#}
+                    {#                                        <a href="{{ info.get_absolute_url }}">{{ info.name }}</a>#}
+                    {#                                    </option>#}
+                    {#                                {% endfor %}#}
+                    {#                            </select>#}
+                    {##}
+                    {#                        </select>#}
+
+                </div>
+
+
+                {#                        <select name="body-type">#}
+                {#                            <option value="1"><a href="{{ data.get_absolute_url }}">{{ data.name }}</a></option>#}
+                {#                            <select name="body-type">#}
+                {#                                {% for info in data.sub.all %}#}
+                {#                                    <option>#}
+                {#                                        <a href="{{ info.get_absolute_url }}">{{ info.name }}</a>#}
+                {#                                    </option>#}
+                {#                                {% endfor %}#}
+                {#                            </select>#}
+                {##}
+                {#                        </select>#}
+
+            </div>
+        </section>
+    </div>
+    </section>
+
+    <section class="main-vehicles-wrap">
+        <div class="container">
+
+
+            <div class="row po-rel pattern">
+                <div class="col-xs-12 col-sm-8 col-md-9">
+                    <div class="row">
+
+                        <form method="post" action="{% url 'home:car_search' %}">
+                            {% csrf_token %}
+                            <div class="d-flex flex-row align-items-center mb-4">
+
+                                <div class="form-outline flex-fill mb-0">
+                                    <input type="text" name="search" id="form3Example1c"
+                                           class="form-control"
+                                           placeholder="ماشین مورد نظر خود را تایپ کنید مثلا : benz"/>
+                                    <button type="submit" class="btn-info"
+                                            style="border-radius: 5px;background-color: #4aaeec">جستجو ماشین
+                                    </button>
+                                </div>
+
+                            </div>
+                        </form>
+
+
+                        {% for car in cars %}
+                            <div class="col-sm-6 col-md-4">
+                                <div class="filter-cars">
+                                    <div class="filter-inner">
+                                        <a href={% url 'home:detail' car.id %}><img src="{{ car.image.url }}"
+                                                                                    alt="{{ car.name }}"/></a>
+                                    </div>
+                                    <div class="filter-car-details clearfix">
+                                        {#{{ user_time.duration}}#}
+                                        <a href={% url 'home:detail' car.id %}><h5>{{ car.name|truncatechars:20 }}</h5>
+                                        </a>
+                                        <div class="filter-inner">
+                                            {% if user_time %}
+                                                <span>
+                                                <small>  {% widthratio car.unit_price 1 user_time.duration %} درهم </small>
+                                                <strong>/ برای <small>{{ user_time.duration }}</small> روز</strong>
+                                            </span>
+                                            {% else %}
+                                                <span><small> {{ car.total_price }} درهم </small> <strong>/ روزانه</strong></span>
+                                            {% endif %}
+                                        </div>
+
+
+                                    </div>
+                                    <ul class="filter-car-more-info clearfix">
+                                        <li>
+                                            <i class="fa fa-car" aria-hidden="true"></i>{{ car.doors }} درب
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-tachometer" aria-hidden="true"></i>بنزین
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-cog" aria-hidden="true"></i>اتوماتیک
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-road" aria-hidden="true"></i>{{ car.mileage_limit }} km
+                                        </li>
+                                        <li class="orange-btn">
+                                            <a href="{% url 'home:detail' car.id %}"><i class="fa fa-plus-circle"
+                                                                                        aria-hidden="true"></i>جزئیات
+                                                بیشتر</a>
+                                        </li>
+                                    </ul>
+
+                                </div>
+
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12">
+                            <nav class="services-pagination">
+                                <ul class="pagination">
+                                    {% if cars.has_next %}
+
+                                        <li>
+                                            <a href="?page={{ cars.next_page_number }}" aria-label="Next"><i
+                                                    class="fa fa-long-arrow-right" aria-hidden="true"></i><span
+                                                    aria-hidden="true">بعدی</span></a>
+                                        </li>
+                                        <li>
+                                            <a href="?page={{ cars.next_page_number }}" aria-label="Next"><span
+                                                    aria-hidden="true">{{ cars.next_page_number }}</span></a>
+                                        </li>
+
+                                    {% endif %}
+                                    <li class="active">
+                                        <a href="?page={{ cars.number }}" aria-label="Next">{{ cars.number }}</a>
+                                    </li>
+                                    {% if cars.has_previous %}
+                                        <li>
+                                            <a href="?page={{ cars.previous_page_number }}" aria-label="Previous"><span
+                                                    aria-hidden="true">{{ cars.previous_page_number }}</span></a>
+                                        </li>
+                                        <li>
+                                            <a href="?page={{ cars.previous_page_number }}" aria-label="Previous"><span
+                                                    aria-hidden="true">قبلی</span><i
+                                                    class="fa fa-long-arrow-left"
+                                                    aria-hidden="true"></i></a>
+                                        </li>
+
+                                    {% endif %}
+
+
+                                    {#                                    <li>#}
+                                    {#                                        <a href="#">1</a>#}
+                                    {#                                    </li>#}
+                                    {#                                    <li class="active">#}
+                                    {#                                        <a href="#">2 <span class="sr-only">(جاری)</span></a>#}
+                                    {#                                    </li>#}
+                                    {#                                    <li>#}
+                                    {#                                        <a href="#">3</a>#}
+                                    {#                                    </li>#}
+                                    {#                                    <li>#}
+                                    {#                                        <a href="#">4</a>#}
+                                    {#                                    </li>#}
+                                    {#                                    <li>#}
+                                    {#                                        <a href="#" aria-label="Next"><span aria-hidden="true">بعدی</span><i#}
+                                    {#                                                class="fa fa-long-arrow-right" aria-hidden="true"></i></a>#}
+                                    {#                                    </li>#}
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-xs-12 col-sm-4 col-md-3">
+
+                    <div class="filter-car-aside">
+                        <div class="filter-car-selection">
+                            <h4>فیلتر بر اساس قیمت :</h4>
+                            {#                            <select name="body-type">#}
+                            {#                                <option value="1">سازنده خودرو</option>#}
+                            {#                                <option value="1">سازنده خودرو</option>#}
+                            {#                            </select>#}
+                            {#                            <select name="body-type">#}
+                            {#                                <option value="1">مدل</option>#}
+                            {#                                <option value="1">مدل</option>#}
+                            {#                            </select>#}
+                            {#                            <select name="body-type">#}
+                            {#                                <option value="1">سال ساخت</option>#}
+                            {#                                <option value="1">سال ساخت</option>#}
+                            {#                            </select>#}
+                            {#                            <select name="body-type">#}
+                            {#                                <option value="1">نوع گیربکس</option>#}
+                            {#                                <option value="1">نوع گیربکس</option>#}
+                            {#                            </select>#}
+                        </div>
+                        <form action="">
+
+                            {#                                <div class="offer-overlay">#}
+                            {#                                    &nbsp;#}
+                            {#                                </div>#}
+                            <div class="range-wrap">
+
+                                <div class="multi-range" data-lbound="{{ min_price }}"
+                                     data-ubound="{{ max_price }}">
+                                    <hr>
+                                    <input type="range" name="price_1" min="{{ min_price }}"
+                                           max="{{ max_price }}" step="50"
+                                           value="{{ min_price }}"
+                                           oninput="this.parentNode.dataset.lbound=this.value;">
+
+                                    <input type="range" name="price_2" min="{{ min_price }}"
+                                           max="{{ max_price }}" step="50"
+                                           value="{{ max_price }}"
+                                           oninput="this.parentNode.dataset.ubound=this.value;">
+                                </div>
+                                <div class="vehicles-type">
+                                    <h5 class="view-title-style" style="color: #fff">نوع وسایل نقلیه براساس برند</h5>
+
+                                    <ul class="vehicle-type-list">
+                                        <li>
+                                            <label class="filter_brand">
+                                                {{ filter.form.brand }}
+                                            </label>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <button type="submit" class="btn-info search-price"
+                                        style="border-radius: 5px;background-color: #4aaeec"><i
+                                        class="fa fa-filter"
+                                        aria-hidden="true"></i>
+                                    فیلتر
+                                    وسایل نقلیه
+                                </button>
+
+
+                            </div>
+
+
+                            {#                            <div class="filter-vehicles-btn">#}
+                            {#                                <button type="submit" class="btn-info"#}
+                            {#                                        style="border-radius: 5px;background-color: #4aaeec"><i class="fa fa-filter"#}
+                            {#                                                                                                aria-hidden="true"></i>#}
+                            {#                                    فیلتر#}
+                            {#                                    وسایل نقلیه#}
+                            {#                                </button>#}
+                            {#                            </div>#}
+                        </form>
+
+
+                    </div>
+
+                    {#                    <div class="vehicles-type">#}
+                    {#                        <h5 class="view-title-style">نوع وسایل نقلیه</h5>#}
+                    {##}
+                    {#                        <ul class="vehicle-type-list">#}
+                    {#                            <li>#}
+                    {#                                <label for="type1">#}
+                    {#                                    {{ filter.form.brand }}#}
+                    {#                                    <input type="checkbox" name="type1" id="type1" checked="checked"/>#}
+                    {#                                    <span class="check-in"></span> اسکوتر و دوچرخه <small>[324]</small></label>#}
+                    {#                                </label>#}
+                    {#                            </li>#}
+                    {#                            <li>#}
+                    {#                                <label for="type2">#}
+                    {#                                    <input type="checkbox" name="type2" id="type2" checked="checked"/>#}
+                    {#                                    <span class="check-in"></span> ماشین های شخصی<small>[248]</small></label>#}
+                    {#                            </li>#}
+                    {#                            <li>#}
+                    {#                                <label for="type3">#}
+                    {#                                    <input type="checkbox" name="type3" id="type3" checked="checked"/>#}
+                    {#                                    <span class="check-in"></span> سواری و وانت <small>[556]</small></label>#}
+                    {#                            </li>#}
+                    {#                            <li>#}
+                    {#                                <label for="type4">#}
+                    {#                                    <input type="checkbox" name="type4" id="type4"/>#}
+                    {#                                    <span class="check-in"></span> ماشین خانوادگی <small>[640]</small></label>#}
+                    {#                            </li>#}
+                    {#                            <li>#}
+                    {#                                <label for="type5">#}
+                    {#                                    <input type="checkbox" name="type5" id="type5"/>#}
+                    {#                                    <span class="check-in"></span> ون و کامیون<small>[572]</small></label>#}
+                    {#                            </li>#}
+                    {#                        </ul>#}
+                    {#                    </div>#}
+                    <form action="">
+                        <div class="vehicles-type">
+                            <h5 class="view-title-style">بر اساس گران ترین و ارزان ترین</h5>
+
+                            <ul class="vehicle-type-list">
+                                <li>
+                                    <label for="etype1">
+                                        <input type="submit" name="price" value="گران ترین"/>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label for="etype2">
+                                        <input type="submit" name="price" value="ارزان ترین"/>
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+                    </form>
+
+
+                    <div class="inner-info-section all-vehicles-contact">
+                        <div class="contact-info">
+                            <h5 class="view-title-style">با ما تماس بگیرید</h5>
+                            <address>
+                                صندوق پستی: تهران 24584021 <span class="line-break"></span>
+                                آدرس: تهران، بلوار آفریقا، خیابان ظفر<span class="line-break"></span>
+                                کوی نور ، شماره 145 <span class="line-break"></span>
+                                <span class="line-break"></span>
+                                پست الکترونیک:<a href="mailto:mail@letsdrive.com"> mail@letsdrive.com</a><span
+                                    class="line-break"></span>
+                                تلفن: <a href="tel:88001234567">89 89 44 33 - 021</a><span
+                                    class="line-break"></span>
+                                فکس: <a href="fax:80009876543 ">89 89 44 33 - 021 </a><span
+                                    class="line-break"></span>
+                            </address>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="border-line">
+                    &nbsp;
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    </div>
+    <!--Content Section End-->
+{% endblock %}

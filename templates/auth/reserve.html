@@ -1,0 +1,2112 @@
+{% extends 'nav.html' %}
+{% load static %}
+{% block title %}
+    Reservation Page
+{% endblock %}
+{% block style %}
+    <style>
+        .terminals {
+            color: white;
+            border-radius: 5px;
+        }
+
+        .inner_page {
+            margin-top: 200px;
+            min-height: 60vh;
+        }
+
+        .background_bg {
+            background-size: 100%;
+            padding: 20px 0;
+            background-position: revert;
+        }
+
+        .app_container {
+            max-width: 1200px;
+            margin: 0px auto;
+            padding: 0px 15px;
+        }
+
+        .tab_stepper {
+            margin-bottom: 30px;
+        }
+
+        .cd-breadcrumb {
+            display: grid;
+            grid-template-columns: max-content auto auto auto;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .cd-breadcrumb {
+            background-color: #fff;
+            border-radius: 6px;
+            overflow: hidden;
+            border: none;
+        }
+
+        .cd-breadcrumb.triangle li {
+            position: relative;
+            padding: 0;
+            margin: 0 4px 0 0;
+        }
+
+        .cd-breadcrumb.nav-tabs > li:first-child > a {
+            padding-right: 10px;
+        }
+
+        .cd-breadcrumb.triangle li.active > * {
+            color: #ffffff;
+            background-color: #1c6ba8;
+            border-color: #1c6ba8;
+        }
+
+        .cd-breadcrumb.nav-tabs > li > a {
+            padding-right: 30px;
+            padding-top: 4px;
+        }
+
+        .cd-breadcrumb.nav-tabs > li > a {
+            height: 60px;
+            display: flex;
+            align-items: center;
+        }
+
+        .cd-breadcrumb.triangle li > * {
+            position: relative;
+            padding: 0;
+            color: #333;
+            background-color: #edeff0;
+            border-color: #edeff0;
+        }
+
+        a:not([href]):not([tabindex]) {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .cd-breadcrumb.triangle li a span {
+            font-size: 32px;
+            margin-left: 10px;
+        }
+
+        .cd-breadcrumb .stepper_content h3 {
+            font-size: 18px;
+            margin-top: 0;
+            margin-right: 0;
+            margin-left: 0;
+            margin-bottom: 5px;
+        }
+
+        .cd-breadcrumb .stepper_content h5 {
+            margin: 0px;
+            font-size: 13px;
+        }
+
+        .cd-breadcrumb.triangle li > *::after {
+            z-index: 2;
+            border-left-color: inherit;
+        }
+
+        .cd-breadcrumb.triangle li::after {
+            z-index: 1;
+            -webkit-transform: translate(4px, 0);
+            -ms-transform: translate(4px, 0);
+            -o-transform: translate(4px, 0);
+            transform: translate(4px, 0);
+            border-right-color: #ffffff;
+            margin: 0;
+        }
+
+        .cd-breadcrumb.triangle li::after, .cd-breadcrumb.triangle li > *::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 100%;
+            height: 0;
+            width: 0;
+            border: 30px solid transparent;
+            border-right-width: 20px;
+            border-left-width: 0;
+        }
+
+        .cd-breadcrumb.triangle li.complete a {
+            color: #1c6ba8;
+        }
+
+        .selection_block {
+            display: inline-block;
+            background-color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .selection_block .place {
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1c6ba8;
+            padding: 15px 15px;
+        }
+
+        .selection_block .place h4 {
+            margin: 0px;
+            font-size: 15px;
+            padding-top: 3px;
+        }
+
+        .selection_block input[type="text"] {
+            background-color: #59637e;
+            border: 1px solid #1c6ba8;
+            border-radius: 3px;
+            outline: none;
+        }
+
+        .selection_dtl {
+            padding: 2px 0px 0 12px;
+        }
+
+        .selection_dtl {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            border-left: 1px solid #606060;
+            border-right: 1px solid #606060;
+        }
+
+        .selection_dtl .input-wrap input {
+            margin-bottom: 5px;
+        }
+
+        .selection_dtl_rental_duration {
+            padding-top: 2px;
+            padding-right: 12px;
+            padding-left: 12px;
+            padding-bottom: 0;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            border-left: 1px solid #606060;
+            border-right: 1px solid #606060;
+        }
+
+        .selection_dtl_rental_duration .selection_title {
+            flex: 1;
+            display: flex;
+        }
+
+        .selection_dtl_rental_duration .selection_title svg {
+            width: 14px;
+            height: 14px;
+            margin-left: 5px;
+            margin-top: 2px;
+        }
+
+        .selection_dtl_rental_duration .selection_dtl label {
+            margin-top: 0px;
+            margin-right: 10px;
+            margin-left: 10px;
+            margin-bottom: 0px;
+            padding-right: 5px;
+            padding-left: 50px;
+            font-size: 13px;
+            font-family: "-apple-system,BlinkMacSystemFont," Segoe UI ",Roboto," Helvetica Neue ",Arial,sans-serif," Apple Color Emoji "," Segoe UI Emoji "," Segoe UI Symbol "" !important;
+        }
+
+        .selection_dtl_rental_duration span {
+            margin-right: 6px;
+            font-size: 15px;
+        }
+
+        .selection_title {
+            flex: 1;
+            display: flex;
+        }
+
+        .selection_title svg {
+            width: 14px;
+            height: 14px;
+            margin-left: 5px;
+            margin-top: 2px;
+        }
+
+        .selection_dtl label {
+            margin-top: 0px;
+            margin-right: 10px;
+            margin-left: 10px;
+            margin-bottom: 0px;
+            padding-right: 5px;
+            padding-left: 50px;
+            font-size: 13px;
+            font-family: "-apple-system,BlinkMacSystemFont," Segoe UI ",Roboto," Helvetica Neue ",Arial,sans-serif," Apple Color Emoji "," Segoe UI Emoji "," Segoe UI Symbol "" !important;
+        }
+
+        input[type="text"], input[type="password"], input[type="email"], textarea, select {
+            background-color: rgba(0, 0, 0, 0.4);
+            outline: none;
+        }
+
+        .form-control {
+            display: block;
+            width: 100%;
+            padding: 0.375rem 0.75rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #495057;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            border-radius: 0.25rem;
+            transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+        }
+
+        .single_box {
+            margin-bottom: 20px;
+        }
+
+        .avail_head {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .single_box .avail_head .left {
+            min-width: auto;
+        }
+
+        .avail_head .left {
+            min-width: 40%;
+            padding-top: 12px;
+            padding-right: 15px;
+            padding-left: 5px;
+            padding-bottom: 12px;
+        }
+
+        .avail_head .left, .avail_head .right {
+            background-color: #1c6ba8;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            height: 40px;
+        }
+
+        .avail_head h2 {
+            text-transform: uppercase;
+            margin: 0px;
+            font-size: 15px;
+        }
+
+        .avail_head .left:after {
+            content: "";
+            width: 0;
+            height: 0;
+            border-bottom: 40px solid #1c6ba8;
+            border-left: 40px solid transparent;
+            position: absolute;
+            left: -40px;
+        }
+
+        .single_box_body {
+            background-color: #fff;
+            padding: 15px;
+        }
+
+        .selected_car {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .selected_car .pic {
+            margin-right: 10px;
+            max-width: 200px;
+        }
+
+        .selected_car img {
+            width: 100%;
+        }
+
+        .selected_content {
+            text-align: left;
+        }
+
+        .selected_content h2 {
+            font-size: 22px;
+            color: #1c6ba8;
+        }
+
+        .selected_content h1 {
+            margin-top: 2px;
+            margin-right: 0px;
+            margin-left: 0px;
+            margin-bottom: 0px;
+            font-size: 24px;
+        }
+
+        .single_box {
+            margin-bottom: 20px;
+        }
+
+        .avail_head {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .single_box .avail_head .left {
+            min-width: auto;
+        }
+
+        .avail_head .left {
+            min-width: 40%;
+            padding: 12px 5px 12px 15px;
+        }
+
+        .avail_head .left, .avail_head .right {
+            background-color: #1c6ba8;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            height: 40px;
+        }
+
+        .single_box .avail_head h2 {
+            text-transform: none;
+        }
+
+        .avail_head h2 {
+            text-transform: uppercase;
+            margin: 0px;
+            font-size: 15px;
+        }
+
+        .avail_head .left:after {
+            content: "";
+            width: 0;
+            height: 0;
+            border-bottom: 40px solid #1c6ba8;
+            border-left: 40px solid transparent;
+            position: absolute;
+            left: -40px;
+        }
+
+        .single_box_body {
+            background-color: #fff;
+            padding: 15px;
+        }
+
+        .pickup_note p {
+            margin: 0px;
+            font-size: 13px;
+            font-family: "-apple-system,BlinkMacSystemFont," Segoe UI ",Roboto," Helvetica Neue ",Arial,sans-serif," Apple Color Emoji "," Segoe UI Emoji "," Segoe UI Symbol "" !important;
+            border-bottom: 1px solid #000;
+            padding-bottom: 10px;
+        }
+
+        .single_box_radio {
+            margin: 10px 0;
+        }
+
+        .single_box_radio .radio {
+            position: relative;
+            cursor: pointer;
+            line-height: 20px;
+            font-size: 13px;
+            margin-top: 0px;
+            margin-left: 15px;
+            margin-right: 0px;
+            margin-bottom: 0px;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .single_box_radio input[type=checkbox], input[type=radio] {
+            box-sizing: border-box;
+            padding: 0;
+        }
+
+        .single_box_radio input[type="radio"]:checked + .label {
+            border-color: #1c6ba8;
+        }
+
+        .single_box_radio .radio .label {
+            position: relative;
+            display: block;
+            float: right;
+            margin-left: 10px;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #c8ccd4;
+            border-radius: 100%;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .single_box_radio input[type="radio"]:checked + .label:after {
+            transform: scale(1);
+            transition: all 0.2s cubic-bezier(0.35, 0.9, 0.4, 0.9);
+            opacity: 1;
+        }
+
+        .single_box_checkbox .row {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            margin-right: -15px;
+            margin-left: -15px;
+        }
+
+        .single_box_checkbox input[type="text"], input[type="password"], input[type="email"], textarea, select {
+            outline: none;
+        }
+
+        .single_box_checkbox {
+            min-height: 180px;
+            max-height: 180px;
+            overflow: auto;
+            border: 1px solid #000;
+            padding: 15px;
+        }
+
+        .single_box_checkbox h5 {
+            direction: ltr;
+            margin-top: 30px;
+        }
+
+        .single_box_radio .radio .label:after {
+            content: "";
+            position: absolute;
+            top: 3px;
+            right: 3.3px;
+            width: 10px;
+            height: 10px;
+            border-radius: 100%;
+            background: #1c6ba8;
+            transform: scale(0);
+            transition: all 0.2s ease;
+            opacity: 0.08;
+            pointer-events: none;
+        }
+
+        .single_box_radio .radio span:last-child {
+            position: relative;
+            top: 2px;
+        }
+
+        .single_box.right .avail_head {
+            justify-content: flex-end;
+        }
+
+        .avail_head {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .avail_head .right {
+            padding-top: 12px;
+            padding-left: 15px;
+            padding-right: 5px;
+            padding-bottom: 12px;
+        }
+
+        .avail_head .left, .avail_head .right {
+            background-color: #1c6ba8;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            height: 40px;
+        }
+
+        .avail_head .right:before {
+            content: "";
+            width: 0;
+            height: 0;
+            border-bottom: 40px solid #1c6ba8;
+            border-right: 40px solid transparent;
+            position: absolute;
+            right: -40px;
+        }
+
+        .single_box .avail_head h2 {
+            text-transform: none;
+        }
+
+        .avail_head h2 {
+            text-transform: uppercase;
+            margin: 0px;
+            font-size: 15px;
+        }
+
+        .single_box_body {
+            background-color: #fff;
+            padding: 15px;
+        }
+
+        .services_check_grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-gap: 15px;
+        }
+
+        .services_check {
+            z-index: 1;
+            position: relative;
+        }
+
+        .services_check input[type="checkbox"] {
+            display: none;
+        }
+
+        .services_check_box {
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+            background-color: #f7f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 15px 10px;
+            cursor: pointer;
+            height: 100%;
+            margin: 0px;
+            transition: all 100ms ease-out;
+            position: relative;
+        }
+
+        .service_icon {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+            margin-top: 5px;
+        }
+
+        .service_icon svg {
+            width: auto;
+            height: 22px;
+            fill: #747474;
+        }
+
+        .service_title {
+            color: #747474;
+            font-size: 14px;
+            margin: 0px 0px 6px;
+            font-family: "-apple-system,BlinkMacSystemFont," Segoe UI ",Roboto," Helvetica Neue ",Arial,sans-serif," Apple Color Emoji "," Segoe UI Emoji "," Segoe UI Symbol "" !important;
+            line-height: 17px;
+            text-align: center;
+        }
+
+        .service_price {
+            color: #3da63d;
+            font-size: 14px;
+            margin: 0px;
+        }
+
+        .services_check_box label {
+            position: absolute;
+            top: 5px;
+            left: 10px;
+            font-size: 10px;
+            opacity: 0.6;
+        }
+
+        .coupon_row {
+            margin: 20px 0px 30px;
+        }
+
+        .coupon_row h4 {
+            color: #606060;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .coupon_input {
+            display: flex;
+        }
+
+        .coupon_input input {
+            background-color: #1c6ba8;
+            border: 1px solid #ddd;
+            padding: 4px 10px;
+            border-radius: 4px;
+            flex: 1;
+            margin-left: 20px;
+        }
+
+        .coupon_input input[type=number] {
+            color: #fff;
+        }
+
+        input:disabled {
+            cursor: default;
+            background-color: rgba(239, 239, 239, 0.3), rgba(59, 59, 59, 0.3);
+            color: rgb(84, 84, 84), rgb(170, 170, 170);
+            border-color: rgba(118, 118, 118, 0.3);
+        }
+
+        .custom_checkbox input[type=checkbox], input[type=radio] {
+            box-sizing: border-box;
+            padding: 0;
+        }
+
+        .inp-cbx {
+            display: none;
+        }
+
+        .cbx {
+            margin: auto;
+            -webkit-user-select: none;
+            user-select: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .cbx span:first-child {
+            position: relative;
+            width: 20px;
+            height: 20px;
+            border-radius: 2px;
+            transform: scale(1);
+            vertical-align: middle;
+            border: 2px solid #9098a9;
+            transition: all 0.2s ease;
+        }
+
+        .cbx span {
+            display: inline-block;
+            vertical-align: middle;
+            transform: translate3d(0, 0, 0);
+        }
+
+        .cbx span:first-child:before {
+            content: "";
+            width: 100%;
+            height: 100%;
+            background: #1c6ba8;
+            display: block;
+            transform: scale(0);
+            opacity: 1;
+            border-radius: 50%;
+        }
+
+        .cbx span:first-child svg {
+            position: absolute;
+            top: 3px;
+            right: 2px;
+            fill: none;
+            stroke: #ffffff;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 16px;
+            stroke-dashoffset: 16px;
+            transition: all 0.3s ease;
+            transition-delay: 0.1s;
+            transform: translate3d(0, 0, 0);
+        }
+
+        .cbx span:last-child {
+            padding-right: 8px;
+            font-size: 13px;
+            position: relative;
+            top: 2px;
+        }
+
+        .cbx span {
+            display: inline-block;
+            vertical-align: middle;
+            transform: translate3d(0, 0, 0);
+        }
+
+        .order_info .order_row {
+            border-bottom: 1px solid #606060;
+        }
+
+        .order_row {
+            display: flex;
+            justify-content: space-between;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+        }
+
+        .order_row h5 {
+            margin: 0px;
+            font-size: 14px;
+            font-family: "-apple-system,BlinkMacSystemFont," Segoe UI ",Roboto," Helvetica Neue ",Arial,sans-serif," Apple Color Emoji "," Segoe UI Emoji "," Segoe UI Symbol "" !important;
+            color: #606060;
+        }
+
+        .payment_info {
+            margin-bottom: 80px;
+        }
+
+        .payment_info .order_row {
+            border: none;
+            padding-bottom: 2px;
+        }
+
+        .order_info .order_row {
+            border-bottom: 1px solid #606060;
+        }
+
+        .order_row {
+            display: flex;
+            justify-content: space-between;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+        }
+
+        .order_row.total {
+            border-top: 1px solid #606060;
+            padding-top: 10px;
+        }
+
+        .payment_info .order_row {
+            border: none;
+            padding-bottom: 2px;
+        }
+
+        .order_info .order_row {
+            border-bottom: 1px solid #606060;
+        }
+
+        .pay_btn, .pay_btn:hover, .pay_btn:focus {
+            background-color: #1c6ba8;
+            color: #fff;
+            display: flex;
+            border-radius: 6px;
+            padding: 7px 15px 5px;
+            font-size: 20px;
+        }
+
+        .inp-cbx:checked + .cbx span:first-child svg {
+            stroke-dashoffset: 0;
+        }
+
+        .cbx span:first-child svg {
+            position: absolute;
+            top: 3px;
+            left: 2px;
+            fill: none;
+            stroke: #ffffff;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 16px;
+            stroke-dashoffset: 16px;
+            transition: all 0.3s ease;
+            transition-delay: 0.1s;
+            transform: translate3d(0, 0, 0);
+        }
+
+        .inp-cbx:checked + .cbx span:first-child {
+            background: #1c6ba8;
+            border-color: #1c6ba8;
+            animation: wave 0.4s ease;
+        }
+
+        .cbx span:first-child {
+            position: relative;
+            width: 20px;
+            height: 20px;
+            border-radius: 2px;
+            transform: scale(1);
+            vertical-align: middle;
+            border: 2px solid #9098a9;
+            transition: all 0.2s ease;
+        }
+
+        .cbx span {
+            display: inline-block;
+            vertical-align: middle;
+            transform: translate3d(0, 0, 0);
+        }
+
+        .inp-cbx:checked + .cbx span:first-child:before {
+            transform: scale(3.5);
+            opacity: 0;
+            transition: all 0.6s ease;
+        }
+
+        .cbx span:first-child:before {
+            content: "";
+            width: 100%;
+            height: 100%;
+            background: #1c6ba8;
+            display: block;
+            transform: scale(0);
+            opacity: 1;
+            border-radius: 50%;
+        }
+
+
+        @media screen and (max-width: 991px) {
+            .selection_block .place {
+                padding: 10px;
+            }
+
+            .selection_dtl {
+                padding: 10px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .col-md-6 {
+                -webkit-box-flex: 0;
+                -ms-flex: 0 0 50%;
+                flex: 0 0 50%;
+                max-width: 50%;
+            }
+        }
+
+
+    </style>
+{% endblock %}
+{% block body %}
+
+    <section class="inner_page" ng-init="checkdate()">
+        <div class="background_bg" ng-init="setsupercdwvalue()">
+            <div class="app_container">
+                <form method="post" action="{% url 'reserve:next_level' %}" id="myForm" name="myForm"
+                >
+                    <input type="hidden" name="car_id" value="{{ cars.id }}">
+                    {#                onsubmit="event.preventDefault(); checkloc()"#}
+                    {% csrf_token %}
+                    <div class="tab_stepper">
+                        <ul class="cd-breadcrumb triangle nav nav-tabs">
+                            <li class="active">
+                                <a>
+                                    <span>1</span>
+                                    <div class="stepper_content">
+                                        <h3>اطلاعات رزرو شما</h3>
+                                        <h5>محل تحویل و دریافت ماشین</h5>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="complete">
+                                <a>
+                                    <span>2</span>
+                                    <div class="stepper_content">
+                                        <h3>اطلاعات شخصی</h3>
+
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="complete">
+                                <a href="#">
+                                    <span>3</span>
+                                    <div class="stepper_content">
+                                        <h3>پرداخت</h3>
+                                        <h5>زرین پال</h5>
+                                    </div>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="selection_block">
+                                <div class="place">
+                                    <h4>دریافت ماشین</h4>
+                                </div>
+
+
+                                <div class="selection_dtl">
+                                    <label>تاریخ دریافت ماشین</label>
+                                    <div class="input-wrap clearfix">
+                                        <input type="text" id="startDatePicker" name="pickup_date" autocomplete="off"
+                                               class="form-control" onchange="calcDuration()"
+                                               value="{{ times.pickup_date }}">
+                                    </div>
+
+                                    <label>ساعت دریافت ماشین (به وقت دبی)</label>
+                                    <div class="input-wrap clearfix">
+                                        {#                                        {% for dates in times %}#}
+                                        <input type="text" name="pickup_time" class="form-control"
+                                               value="{{ times.pickup_time }}">
+                                        {#                                        {% endfor %}#}
+                                    </div>
+
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="selection_block">
+                                <div class="place">
+                                    <h4>تحویل ماشین</h4>
+                                </div>
+
+                                <div class="selection_dtl">
+                                    <label>تاریخ تحویل ماشین</label>
+                                    <div class="input-wrap clearfix">
+                                        <input type="text" id="endDatePicker" autocomplete="off"
+                                               name="return_date" class="form-control" onchange="calcDuration()"
+                                               value="{{ times.return_date }}">
+                                    </div>
+
+                                    <label>ساعت تحویل ماشین (به وقت دبی)</label>
+                                    <div class="input-wrap clearfix">
+                                        {#                                        {% for dates in times %}#}
+                                        <input type="text" name="return_time" class="form-control"
+                                               value="{{ times.return_time }}">
+                                        {#                                        {% endfor %}#}
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="row">
+                                <div id="col-md-12">
+
+                                    <button type="submit"
+                                            onclick="calcDuration()"
+                                            class="rev-sbutton-blue">محاسبه مدت زمان اجاره
+                                    </button>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="selection_block">
+                                <div class="place">
+                                    <h4>مدت زمان اجاره</h4>
+                                </div>
+                                <div class="selection_dtl_rental_duration">
+                                    <label class="selection_title">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 11.55 19.52">
+                                            <path d="M9 .94a5.62 5.62 0 012 7.05L6 19.52.58 8.28A5.75 5.75 0 015 0a5.58 5.58 0 01.7 0A6.33 6.33 0 019 .94M5.77 2.6A2.77 2.77 0 003 5.34a2.78 2.78 0 002.77 2.74 2.78 2.78 0 002.82-2.74A2.77 2.77 0 005.77 2.6"
+                                                  fill="#4d4d4d"></path>
+                                        </svg>
+                                        <span>مدت زمان اجاره : </span>
+                                    </label>
+                                    <label class="selection_value">
+                                        {#                                        {% for dates in times %}#}
+                                        <span id="dayscount">{{ times.duration }} روز </span>
+                                        {#                                        {% endfor %}#}
+                                    </label>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+
+                            <div class="single_box">
+                                <div class="avail_head">
+                                    <div class="left">
+                                        <h2>انتخاب شما : </h2>
+                                    </div>
+                                </div>
+                                <div class="single_box_body">
+                                    <div class="selected_car">
+                                        {#                                        {% for reserves in times %}#}
+                                        <div class="pic">
+                                            <img src="{{ cars.image.url }}"
+                                                 alt="">
+                                        </div>
+                                        <div class="selected_content">
+                                            <h2>
+                                                {{ cars.name }}
+                                            </h2>
+                                            {#                                                {% for cost in times %}#}
+                                            <h1 id="priceforrental">{% widthratio cars.unit_price 1 times.duration %}
+                                                درهم </h1>
+                                            {#                                                {% endfor %}#}
+                                        </div>
+                                        {#                                        {% endfor %}#}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {#                    <div class="row">#}
+                    {#                        <div id="col-md-12">#}
+                    {#                            <button type="submit" style="background-color: #1c6ba8;border-radius: 5px"#}
+                    {#                                    class="rev-sbutton-blue">مرحله بعد#}
+                    {#                            </button>#}
+                    {##}
+                    {##}
+                    {#                        </div>#}
+                    {#                    </div>#}
+
+
+                    {#                    <input type="hidden" name="_token" value="UAMwz2G7civEKAJl3zeY61Gch43cyDbdIAcMbNpG"#}
+                    {#                           autocomplete="off">#}
+                    {#                    <input type="hidden" name="product_id" value="6" autocomplete="off">#}
+                    {#                    <input type="hidden" name="pickup_date" value="" autocomplete="off">#}
+                    {#                    <input type="hidden" name="return_date" value="" autocomplete="off">#}
+                    {#                    <input type="hidden" name="pickup_time" value="" autocomplete="off">#}
+                    {#                    <input type="hidden" name="return_time" value="" autocomplete="off">#}
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="single_box">
+                                <div class="avail_head">
+                                    <div class="left">
+                                        <h2>محل دریافت ماشین</h2>
+                                    </div>
+                                </div>
+                                <strong id="pickup_alert"
+                                        style="color: red; margin-bottom: 5px; margin-right: 13px;display: none"></strong>
+                                <div class="single_box_body">
+                                    <div class="pickup_note">
+                                        <p>محل دریافت ماشین : من ترجیح میدم که ماشین را از ... دریافت کنم.</p>
+                                    </div>
+                                    <div class="single_box_radio">
+                                        <div class="custom_radio">
+                                            <label for="opt1" class="radio">
+                                                <input type="radio"
+                                                       onclick="hideShowpick(1)"
+                                                       name="pickup_location_category"
+                                                       id="opt1"
+                                                       class="hidden ng-pristine ng-untouched ng-valid ng-empty"
+                                                       value="Rental Hub" checked>
+                                                <span class="label"></span>
+                                                <span>مرکز اجاره</span>
+                                            </label>
+                                            <label for="opt2" class="radio">
+                                                <input type="radio" onclick="hideShowpick(2)"
+                                                       name="pickup_location_category"
+                                                       ng-model="pickuptypradio" ng-value="&quot;doorsteps&quot;"
+                                                       id="opt2"
+                                                       class="hidden ng-pristine ng-untouched ng-valid ng-empty"
+                                                       value="doorsteps">
+                                                <span class="label"></span>
+                                                <span>محل اقامت در دبی</span>
+                                            </label>
+                                            <label for="opt3" class="radio">
+                                                <input type="radio" name="pickup_location_category"
+                                                       onclick="hideShowpick(3)"
+                                                       ng-model="pickuptypradio" ng-value="&quot;airport&quot;"
+                                                       id="opt3"
+                                                       class="hidden ng-pristine ng-untouched ng-valid ng-empty"
+                                                       value="airport">
+                                                <span class="label"></span>
+                                                <span>فرودگاه</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" name="pick_loc" id="pick_loc" value="1">
+                                    <div class="single_box_checkbox" id="renthubpick">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div style="width: 100%">
+                                                    <h4>آدرس مرکز اجاره در دبی : </h4>
+                                                    <h5>Shaikh Khalifa bin zayed st Next to president Hotel Dubai,
+                                                        United Arab Emirates.</h5>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+                                    </div>
+                                    <div class="single_box_checkbox" id="doorstepspick" style="display: none;">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                                <textarea cols="20" id="pickup_self_place"
+                                                                          name="user_address"
+                                                                          ng-model="pickupaddress"
+                                                                          style="width: 100%; height: 148px; margin-top: 0px; margin-bottom: 0px;"
+                                                                          class="ng-pristine ng-untouched ng-valid ng-empty">آدرس خودتان در دبی برای دریافت ماشین تایپ کنید...</textarea>
+
+                                            </div>
+
+
+                                        </div>
+
+                                    </div>
+                                    <div class="single_box_checkbox" id="airportpick" style="display: none;">
+                                        <div class="row">
+                                            <div class="col-md-6">
+
+
+                                                <select name="p_terminal" id="" class="terminals">
+                                                    <option value="Terminal 1">Terminal 1</option>
+                                                    <option value="Terminal 2">Terminal 2</option>
+                                                    <option value="Terminal 3">Terminal 3</option>
+                                                </select>
+
+
+                                                {#                                                <div class="custom_checkbox">#}
+                                                {#                                                    <input class="inp-cbx ng-pristine ng-untouched ng-valid ng-empty pradio"#}
+                                                {#                                                           id="cbx3797" type="radio" ng-model="pickupairport"#}
+                                                {#                                                           ng-value="&quot;1&quot;" name="pickup_location"#}
+                                                {#                                                           onclick="" value="1">#}
+                                                {#                                                    <label class="cbx" for="cbx3797">#}
+                                                {#                                                                    <span>#}
+                                                {#                                                                        <svg width="12px" height="10px"#}
+                                                {#                                                                             viewBox="0 0 12 10">#}
+                                                {#                                                                            <polyline#}
+                                                {#                                                                                    points="1.5 6 4.5 9 10.5 1"></polyline>#}
+                                                {#                                                                        </svg>#}
+                                                {#                                                                    </span>#}
+                                                {#                                                        <span>Terminal 1</span>#}
+                                                {#                                                    </label>#}
+                                                {#                                                </div>#}
+                                                {#                                                <div class="custom_checkbox">#}
+                                                {#                                                    <input class="inp-cbx ng-pristine ng-untouched ng-valid ng-empty pradio"#}
+                                                {#                                                           id="cbx3798" type="radio" ng-model="pickupairport"#}
+                                                {#                                                           ng-value="&quot;2&quot;" name="pickup_location"#}
+                                                {#                                                           onclick="" value="2">#}
+                                                {#                                                    <label class="cbx" for="cbx3798">#}
+                                                {#                                                                    <span>#}
+                                                {#                                                                        <svg width="12px" height="10px"#}
+                                                {#                                                                             viewBox="0 0 12 10">#}
+                                                {#                                                                            <polyline#}
+                                                {#                                                                                    points="1.5 6 4.5 9 10.5 1"></polyline>#}
+                                                {#                                                                        </svg>#}
+                                                {#                                                                    </span>#}
+                                                {#                                                        <span>Terminal 2</span>#}
+                                                {#                                                    </label>#}
+                                                {#                                                </div>#}
+                                                {#                                                <div class="custom_checkbox">#}
+                                                {#                                                    <input class="inp-cbx ng-pristine ng-untouched ng-valid ng-empty pradio"#}
+                                                {#                                                           id="cbx3799" type="radio" ng-model="pickupairport"#}
+                                                {#                                                           ng-value="&quot;3&quot;" name="pickup_location"#}
+                                                {#                                                           onclick="" value="3">#}
+                                                {#                                                    <label class="cbx" for="cbx3799">#}
+                                                {#                                                                    <span>#}
+                                                {#                                                                        <svg width="12px" height="10px"#}
+                                                {#                                                                             viewBox="0 0 12 10">#}
+                                                {#                                                                            <polyline#}
+                                                {#                                                                                    points="1.5 6 4.5 9 10.5 1"></polyline>#}
+                                                {#                                                                        </svg>#}
+                                                {#                                                                    </span>#}
+                                                {#                                                        <span>Terminal 3</span>#}
+                                                {#                                                    </label>#}
+                                                {#                                                </div>#}
+                                            </div>
+                                            {#                                            <input type="text" name="pickup_air_terminal" id="" value="">#}
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="single_box right">
+                                <div class="avail_head">
+                                    <div class="right">
+                                        <h2>محل تحویل ماشین</h2>
+                                    </div>
+                                </div>
+                                <strong id="return_alert"
+                                        style="color: red; margin-bottom: 5px; margin-right: 13px;display: none"></strong>
+                                <div class="single_box_body">
+
+                                    <div class="pickup_note">
+
+                                        <p>محل تحویل ماشین : ترجیح می دهم ماشین را در اینجا تحویل بدهم.</p>
+                                    </div>
+                                    <div class="single_box_radio">
+                                        <div class="custom_radio">
+                                            <label for="return_1" class="radio">
+                                                <input type="radio" onclick="hideShowreturn(4)"
+                                                       ng-model="returntypradio" ng-value="'rentalhub'"
+                                                       name="return_location_category" id="return_1"
+                                                       class="hidden ng-pristine ng-untouched ng-valid ng-empty"
+                                                       value="Rental Hub">
+                                                <span class="label"></span>
+                                                <span>مرکز اجاره</span>
+                                            </label>
+                                            <label for="return_2" class="radio">
+                                                <input type="radio" onclick="hideShowreturn(5)"
+                                                       ng-model="returntypradio" ng-value="'doorsteps'"
+                                                       name="return_location_category" id="return_2"
+                                                       class="hidden ng-pristine ng-untouched ng-valid ng-empty"
+                                                       value="doorsteps">
+                                                <span class="label"></span>
+                                                <span>محل اقامت در دبی</span>
+                                            </label>
+                                            <label for="return_3" class="radio">
+                                                <input type="radio" onclick="hideShowreturn(6)"
+                                                       ng-model="returntypradio" ng-value="'airport'"
+                                                       name="return_location_category" id="return_3"
+                                                       class="hidden ng-pristine ng-untouched ng-valid ng-empty"
+                                                       value="airport">
+                                                <span class="label"></span>
+                                                <span>فرودگاه</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="single_box_checkbox" id="renthubreturn">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div style="width: 100%">
+                                                    <h4>آدرس مرکز اجاره در دبی : </h4>
+                                                    <h5>Shaikh Khalifa bin zayed st Next to president Hotel Dubai,
+                                                        United Arab Emirates.</h5>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="single_box_checkbox" id="doorstepsreturn" style="display: none;">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                                <textarea cols="20" name="return_user_address"
+                                                                          style="width: 100%; height: 148px; margin-top: 0px; margin-bottom: 0px;"
+                                                                          id="return_self_place"
+                                                                          class="ng-pristine ng-untouched ng-valid ng-empty" placeholder="آدرس خودتان در دبی برای تحویل ماشین تایپ کنید..."></textarea>
+
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="single_box_checkbox" id="airportreturn" style="display: none;">
+                                        <div class="row">
+                                            <div class="col-md-12">
+
+
+                                                <select name="d_terminal" id="" class="terminals">
+                                                    <option value="Terminal 1">Terminal 1</option>
+                                                    <option value="Terminal 2">Terminal 2</option>
+                                                    <option value="Terminal 3">Terminal 3</option>
+                                                </select>
+
+
+                                                {#                                                <div class="custom_checkbox">#}
+                                                {#                                                    <input class="inp-cbx ng-pristine ng-untouched ng-valid ng-empty"#}
+                                                {#                                                           id="return_airport" type="radio"#}
+                                                {#                                                           name="return_location"#}
+                                                {#                                                           ng-model="returnpairport" ng-value="&quot;1&quot;"#}
+                                                {#                                                           onchange="valueChanged(1)" value="1">#}
+                                                {#                                                    <label class="cbx" for="return_location_3799">#}
+                                                {#                                                                    <span>#}
+                                                {#                                                                        <svg width="12px" height="10px"#}
+                                                {#                                                                             viewBox="0 0 12 10">#}
+                                                {#                                                                            <polyline#}
+                                                {#                                                                                    points="1.5 6 4.5 9 10.5 1"></polyline>#}
+                                                {#                                                                        </svg>#}
+                                                {#                                                                    </span>#}
+                                                {#                                                        <span>Terminal 1</span>#}
+                                                {#                                                    </label>#}
+                                                {#                                                </div>#}
+                                                {#                                            </div>#}
+                                                {#                                            <div class="col-md-12">#}
+                                                {#                                                <div class="custom_checkbox">#}
+                                                {#                                                    <input class="inp-cbx ng-pristine ng-untouched ng-valid ng-empty"#}
+                                                {#                                                           id="return_location_3800" type="radio"#}
+                                                {#                                                           name="return_location"#}
+                                                {#                                                           ng-model="returnairport" ng-value="&quot;2&quot;"#}
+                                                {#                                                           onchange="valueChanged(2)" value="2">#}
+                                                {#                                                    <label class="cbx" for="return_location_3800">#}
+                                                {#                                                                    <span>#}
+                                                {#                                                                        <svg width="12px" height="10px"#}
+                                                {#                                                                             viewBox="0 0 12 10">#}
+                                                {#                                                                            <polyline#}
+                                                {#                                                                                    points="1.5 6 4.5 9 10.5 1"></polyline>#}
+                                                {#                                                                        </svg>#}
+                                                {#                                                                    </span>#}
+                                                {#                                                        <span>Terminal 2</span>#}
+                                                {#                                                    </label>#}
+                                                {#                                                </div>#}
+                                                {#                                            </div>#}
+                                                {#                                            <div class="col-md-12">#}
+                                                {#                                                <div class="custom_checkbox">#}
+                                                {#                                                    <input class="inp-cbx ng-pristine ng-untouched ng-valid ng-empty"#}
+                                                {#                                                           id="return_location_3801" type="radio"#}
+                                                {#                                                           name="return_location"#}
+                                                {#                                                           ng-model="returnairport" ng-value="&quot;3&quot;"#}
+                                                {#                                                           onchange="valueChanged(3)" value="3">#}
+                                                {#                                                    <label class="cbx" for="return_location_3801">#}
+                                                {#                                                                    <span>#}
+                                                {#                                                                        <svg width="12px" height="10px"#}
+                                                {#                                                                             viewBox="0 0 12 10">#}
+                                                {#                                                                            <polyline#}
+                                                {#                                                                                    points="1.5 6 4.5 9 10.5 1"></polyline>#}
+                                                {#                                                                        </svg>#}
+                                                {#                                                                    </span>#}
+                                                {#                                                        <span>Terminal 3</span>#}
+                                                {##}
+                                                {#                                                    </label>#}
+                                                {#                                                </div>#}
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {#                        <input type="hidden" name="return_place" value="">#}
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="single_box">
+                                <div class="avail_head">
+                                    <div class="left">
+                                        <h2>خدمات اضافه</h2>
+                                    </div>
+                                </div>
+                                {#                                {% for reserves in reserve %}#}
+                                <div class="single_box_body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="services">
+                                                <div class="services_check_grid">
+                                                    <div class="services_check">
+                                                        <input type="checkbox" name="pickup_extra" id="r1"
+                                                               onclick="myFunction1()"
+                                                               ng-model="pickupservice" ng-click="pickupfun()"
+                                                               class="ng-pristine ng-untouched ng-valid ng-empty"
+                                                               value="50">
+                                                        <label class="services_check_box" for="r1">
+                                                                        <span class="service_icon">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                 viewBox="0 0 28.33 7.78"><path
+                                                                                    d="M3.21 4.61a1.59 1.59 0 00-1.59 1.58 1.36 1.36 0 000 .2 1.58 1.58 0 003.15-.06v-.14a1.58 1.58 0 00-1.56-1.58zm-.8 1l.33.33a.35.35 0 00-.06.14h-.46a1.09 1.09 0 01.19-.49zm-.19.74h.46a.35.35 0 00.06.14l-.33.32a1 1 0 01-.19-.48zm.85.85a1.18 1.18 0 01-.46-.2l.32-.33a.42.42 0 00.14.06zm0-1.52l-.14.06-.32-.34a.94.94 0 01.46-.19zm.28-.45a.94.94 0 01.46.19l-.32.32-.14-.06zm0 2v-.51a.38.38 0 00.13-.06l.33.34a1.25 1.25 0 01-.46.18zM4 6.79l-.32-.32.06-.14h.45a.94.94 0 01-.19.46zm-.26-.73l-.06-.14.32-.33a1 1 0 01.19.47zM16.55 4.61A1.58 1.58 0 0015 6.19a1.34 1.34 0 000 .2 1.58 1.58 0 003.15-.06v-.14a1.59 1.59 0 00-1.6-1.58zm-.79 1l.32.33-.08.12h-.45a1 1 0 01.21-.47zm-.19.74H16l.06.14-.32.32a.94.94 0 01-.17-.48zm.84.85A1.25 1.25 0 0116 7l.33-.33a.38.38 0 00.13.06zm0-1.52l-.14.06L16 5.4a.94.94 0 01.46-.19zm.28-.45a.94.94 0 01.46.19l-.32.32-.14-.06zm0 2v-.51a.42.42 0 00.14-.06l.32.33a1.18 1.18 0 01-.46.19zm.66-.39L17 6.47a.35.35 0 00.06-.14h.45a.93.93 0 01-.16.46zm-.27-.73a.35.35 0 00-.08-.19l.33-.33a1.09 1.09 0 01.19.47z"></path><path
+                                                                                    d="M19.93 4.1l-.31-.29v-.92a1 1 0 00-.25-.65L18.25 1a.55.55 0 00-.45-.53C16.46.22 12.31-.43 9 .45a22.57 22.57 0 00-4.1 1.64S1.34 2.55.48 3.67A2.62 2.62 0 000 5a1.27 1.27 0 001 1.41l.33.07a.43.43 0 010-.05 2.12 2.12 0 010-.24 1.91 1.91 0 013.81 0 .81.81 0 010 .16 1.11 1.11 0 010 .19h9.61v-.13a2 2 0 010-.24 1.91 1.91 0 013.81 0v.16a1.43 1.43 0 010 .22h.14l.54-.3a1.83 1.83 0 001-1.55v-.26a.43.43 0 00-.31-.34zM6.81 2.22L7 1.63a12.84 12.84 0 016-1v1.7L7 2.8a.92.92 0 00-.19-.58zm9.56-.16l-2.8.22V.63a18.94 18.94 0 013 .48.31.31 0 01.23.21.35.35 0 01-.06.31zM28.29 2.94L25.4 0a.16.16 0 00-.21 0l-2.88 2.9a.12.12 0 000 .15.13.13 0 00.13.09H24v3.65a.15.15 0 00.14.15h2.32a.15.15 0 00.14-.15V3.18h1.59a.14.14 0 00.13-.09.14.14 0 00-.03-.15z"></path></svg>
+                                                                        </span>
+                                                            <span class="service_title" id="picklbl">Pick Up (دریافت ماشین از محل مشتری در دبی)</span>
+                                                            <span class="service_price">درهم 50</span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="services_check" style="">
+                                                        <input type="checkbox" name="dropoff_extra" id="r2"
+                                                               onclick="myFunction2()"
+                                                               ng-model="dropoffservice" ng-click="dropofffun()"
+                                                               class="ng-pristine ng-untouched ng-valid ng-empty"
+                                                               value="50">
+                                                        <label class="services_check_box" for="r2">
+                                                                        <span class="service_icon">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                 viewBox="0 0 28.33 7.78"><path
+                                                                                    d="M22.31 4l2.89 2.9a.18.18 0 00.1 0 .15.15 0 00.1 0L28.29 4a.14.14 0 000-.15.14.14 0 00-.13-.09H26.6V.14a.15.15 0 00-.15-.14h-2.31a.15.15 0 00-.14.14v3.62h-1.59a.13.13 0 00-.13.09.12.12 0 00.03.15zM15.27 6.19a.66.66 0 000 .14 1.58 1.58 0 003.15.06v-.2a1.59 1.59 0 00-3.17 0zm2.57-.13h-.46a.58.58 0 00-.05-.14l.32-.33a1.09 1.09 0 01.19.47zm-.19.73l-.33-.32a.35.35 0 00.06-.14h.46a.94.94 0 01-.19.46zM17 6.72a.35.35 0 00.14-.06l.32.33a1.18 1.18 0 01-.46.19zm0-1.51a.94.94 0 01.46.19l-.32.32-.14-.06zm-.27.45l-.14.06-.33-.32a1 1 0 01.47-.19zM16.26 7l.32-.33a.35.35 0 00.14.06v.46a1.18 1.18 0 01-.46-.19zm-.39-.66h.46a.35.35 0 00.06.14l-.33.32a1 1 0 01-.19-.47zm.46-.27h-.46a1 1 0 01.19-.47l.32.33a.58.58 0 00-.05.14zM1.93 6.19v.14a1.58 1.58 0 003.15.06 1.36 1.36 0 000-.2 1.59 1.59 0 00-3.17 0zm2.57-.13H4a.35.35 0 000-.14l.33-.33a1.09 1.09 0 01.17.47zm-.2.73L4 6.47a.59.59 0 000-.14h.5a1.06 1.06 0 01-.2.46zm-.65-.07a.42.42 0 00.14-.06l.32.34a1.18 1.18 0 01-.46.19zm0-1.51a.94.94 0 01.46.19l-.32.32-.14-.06zm-.28.45l-.14.06-.32-.32a.94.94 0 01.46-.19zM2.91 7l.33-.33a.38.38 0 00.13.06v.46A1.25 1.25 0 012.91 7zm-.38-.66H3v.13l-.32.32a.94.94 0 01-.15-.46zM3 6.06h-.47a1 1 0 01.19-.47l.28.33v.14z"></path><path
+                                                                                    d="M0 4.44v.28a1.86 1.86 0 001 1.55l.55.3h.13a.78.78 0 010-.22.81.81 0 010-.16 1.9 1.9 0 013.8 0 2 2 0 010 .24.59.59 0 000 .13h9.61a.58.58 0 010-.19.81.81 0 010-.16 1.91 1.91 0 013.81 0 2.12 2.12 0 010 .24.07.07 0 010 .05l.33-.07a1.28 1.28 0 001-1.38 2.71 2.71 0 00-.47-1.36c-.86-1.12-4.45-1.58-4.45-1.58A22.22 22.22 0 0011 .45C7.76-.43 3.6.22 2.26.47a.53.53 0 00-.44.53L.69 2.24a1 1 0 00-.25.65v.92l-.3.29a.48.48 0 00-.14.34zM13.12 2.8l-6-.47V.6a12.84 12.84 0 015.95 1l.15.59a1 1 0 00-.1.61zm-9.8-1.17a.35.35 0 01-.06-.31.32.32 0 01.24-.21 18.59 18.59 0 013-.48v1.65l-2.81-.22z"></path></svg>
+                                                                        </span>
+                                                            <span class="service_title" id="droplbl">Drop Off (ارسال کردن 50 درهم)</span>
+                                                            <span class="service_price">درهم 50</span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="services_check">
+                                                        <input type="checkbox" name="babyseat_extra" id="r3"
+                                                               onclick="myFunction3()"
+                                                               ng-model="roadsideservice"
+                                                               ng-click="roadsidefun()"
+                                                               class="ng-pristine ng-untouched ng-valid ng-empty"
+                                                               value="{% widthratio 15 1 times.duration %}">
+                                                        <label class="services_check_box" for="r3">
+                                                                        <span class="service_icon">
+
+
+                                                                            <img style="height: 30px;"
+                                                                                 src="{% static 'assets/images/car-seat.jpg' %}">
+                                                                        </span>
+                                                            <span class="service_title" id="babylbl">BabySeat (صندلی بچه)</span>
+                                                            <span class="service_price">درهم 15</span>
+                                                            <label>روزانه</label>
+                                                        </label>
+                                                    </div>
+                                                    <div class="services_check">
+                                                        <input type="checkbox" name="year1_extra" id="r4"
+                                                               onclick="myFunction4()"
+                                                               ng-model="salikservice" ng-click="salikfun()"
+                                                               class="ng-pristine ng-untouched ng-valid ng-empty"
+                                                               value="{% widthratio 15 1 times.duration %}">
+                                                        <label class="services_check_box" for="r4">
+                                                                        <span class="service_icon">
+
+                                                                            <img style="height: 30px;"
+                                                                                 src="{% static 'assets/images/car-seat.jpg' %}">
+                                                                        </span>
+                                                            <span class="service_title" id="yearlbl">1 Year+</span>
+                                                            <span class="service_price">درهم 15</span>
+                                                            <label>روزانه</label>
+                                                        </label>
+                                                    </div>
+                                                    <div class="services_check ">
+                                                        <input type="checkbox" name="driver_extra"
+                                                               ng-model="personalinsuranceservice"
+                                                               ng-click="personalfun()" id="r5"
+                                                               onclick="myFunction5()"
+                                                               class="ng-pristine ng-untouched ng-valid ng-empty"
+                                                               value="{% widthratio 15 1 times.duration %}">
+                                                        <label class="services_check_box" for="r5">
+                                                                        <span class="service_icon">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                 viewBox="0 0 11.76 11.76"><path
+                                                                                    d="M.35 4.61A1.78 1.78 0 000 5.68v2a.81.81 0 00.81.81h1.57zM5.27 7.91a.6.6 0 00-.6-.61h-.38l.6 1.17a.6.6 0 00.38-.56z"></path><circle
+                                                                                    cx="3.65" cy="1.83"
+                                                                                    r="1.83"></circle><path
+                                                                                    d="M4.46 8.52L2 3.85h-.17a1.84 1.84 0 00-1.19.44l2.2 4.23z"></path><path
+                                                                                    d="M6.45 4.68L7 4.6a1.82 1.82 0 00-1.47-.75h-.48A2.59 2.59 0 012.59 4l1.48 2.9h.59a1 1 0 110 2H1.42v2.84h2v-1.6h.4v1.62h2V8.92h.48a4.3 4.3 0 01-.28-1.51V4.72z"></path><path
+                                                                                    d="M9.13 4.29a7.47 7.47 0 01-2.64.79v2.33a4.12 4.12 0 002.64 3.78 4.13 4.13 0 002.63-3.78V5.08a7.35 7.35 0 01-2.63-.79zM8.66 8.9a.21.21 0 01-.29 0l-1-1 .29-.28.87.87 2.07-2.11.29.29z"></path></svg>
+                                                                        </span>
+                                                            <span class="service_title" id="addlbl">Additional Driver (راننده ی اضافه)</span>
+                                                            <span class="service_price ">درهم 15</span>
+                                                            <label>روزانه</label>
+                                                        </label>
+                                                    </div>
+                                                    <div class="services_check">
+                                                        <input type="checkbox" name="cdw_extra"
+                                                               value="{% widthratio cars.super_CDW 1 times.duration %}"
+                                                               id="r6"
+                                                               onclick="myFunction6()"
+                                                               ng-model="supercdwservice"
+                                                               ng-click="supercdwfun()"
+                                                               class="ng-pristine ng-untouched ng-valid ng-empty">
+                                                        <label class="services_check_box" for="r6">
+                                                                        <span class="service_icon">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                 viewBox="0 0 7.81 9.76"><path
+                                                                                    d="M4.26 1.14A1 1 0 003.9 1a1 1 0 00-.36.16A2.87 2.87 0 012 1.63a4.74 4.74 0 01-1-.13v2.73a5.43 5.43 0 002.9 4.53 5.42 5.42 0 002.93-4.53V1.5a4.74 4.74 0 01-1 .13 2.94 2.94 0 01-1.57-.49z"></path><path
+                                                                                    d="M7.74.35a.18.18 0 00-.16 0 5.26 5.26 0 01-1.72.3A2.06 2.06 0 014.75.3 1.56 1.56 0 003.9 0a1.62 1.62 0 00-.85.3A2 2 0 012 .65 5.44 5.44 0 01.22.34a.16.16 0 00-.15 0A.17.17 0 000 .49v3.74a6.33 6.33 0 003.83 5.51H3.98a6.33 6.33 0 003.83-5.51V.49a.17.17 0 00-.07-.14zm-.58 3.88A5.76 5.76 0 014 9.09h-.16A5.77 5.77 0 01.65 4.23V1.3a.14.14 0 01.06-.12.15.15 0 01.14 0h.14A4.74 4.74 0 002 1.3 2.63 2.63 0 003.38.86 1.07 1.07 0 013.9.65a1.1 1.1 0 01.53.21 2.63 2.63 0 001.43.44 4.74 4.74 0 001-.13H7a.15.15 0 01.14 0 .17.17 0 01.06.12v2.94z"></path></svg>
+                                                                        </span>
+                                                            <span class="service_title" id="cdwlbl">Super CDW (معافیت از خسارت وارد شده به ماشین)</span>
+                                                            <span class="service_price ">درهم {{ cars.super_CDW }}<span
+                                                                    id="supercdwcategory"></span></span>
+
+
+                                                            <label>روزانه</label>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="coupon_row">
+                                                <h4>حداقل مبلغ دو روز پیش پرداخت ، کسر خواهد شد. </h4>
+                                                <div class="coupon_input">
+                                                    <input style="" type="number" min="2" value="2"
+                                                           class="disabled"
+                                                           disabled="" max="2" ng-keyup="Countdays()"
+                                                           name="coupon_code"
+                                                           id="fullamountcode">
+
+                                                </div>
+
+                                            </div>
+                                            <div class="custom_checkbox" id="discount3percent" style="">
+                                                <input class="inp-cbx" id="discount" type="checkbox"
+                                                       name="full_pay" onclick="getDiscount()" value="1">
+                                                {% if times.duration > 2 %}
+                                                    <label class="cbx" for="discount">
+                                                                <span>
+                                                                    <svg width="12px" height="10px" viewBox="0 0 12 10">
+                                                                        <polyline
+                                                                                points="1.5 6 4.5 9 10.5 1"></polyline>
+                                                                    </svg>
+                                                                </span>
+                                                        <span style="color:black">با پرداخت کامل مبلغ، 3% تخفیف بگیرید</span>
+                                                    </label>
+                                                {% endif %}
+                                            </div>
+                                            <br>
+                                            <div class="order_info">
+                                                <div class="order_row">
+                                                    {#                                                        {% for dates in times %}#}
+                                                    <h5>( تعداد روزها ) x ( اجاره روزانه ) = <span
+                                                            id="tttotaldays">{{ times.duration }} * {{ cars.unit_price }}</span>
+                                                        <input class="hidden"
+                                                               id="car_unit_price" value="{{ cars.unit_price }}">
+                                                        <input class="hidden"
+                                                               id="times_duration" value="{{ times.duration }}">
+                                                    </h5>
+                                                    <h5 id="ttttvaluess">{% widthratio cars.unit_price 1 times.duration %}</h5>
+                                                    {#                                                        {% endfor %}#}
+
+
+                                                </div>
+                                                <div class="payment_info">
+                                                    <div class="order_row">
+                                                        <h5>تخفیف</h5>
+                                                        <h5 id="discountvalue">0</h5>
+                                                    </div>
+                                                    <div class="order_row total">
+                                                        <h5>مالیات</h5>
+                                                        <h5 id="tax">5%</h5>
+                                                    </div>
+                                                    <div class="order_row total">
+                                                        <h5>Pick UP (دریافت ماشین از محل مشتری در دبی)</h5>
+                                                        <input type="hidden" id="paid_amount" name="paid_amount"
+                                                               value="" autocomplete="off">
+                                                        <h5 id="result_r1">0</h5>
+
+                                                    </div>
+                                                    <div class="order_row total">
+                                                        <h5>Drop OFF (ارسال کردن 50 درهم)</h5>
+                                                        <input type="hidden" id="paid_amount" name="paid_amount"
+                                                               value="" autocomplete="off">
+                                                        <h5 id="result_r2">0</h5>
+
+                                                    </div>
+                                                    <div class="order_row total">
+                                                        <h5>Infant Baby Seats (صندلی بچه)</h5>
+                                                        <input type="hidden" id="paid_amount" name="paid_amount"
+                                                               value="" autocomplete="off">
+                                                        <h5 id="result_r3">0</h5>
+
+                                                    </div>
+                                                    <div class="order_row total">
+                                                        <h5>1 Year+</h5>
+                                                        <input type="hidden" id="paid_amount" name="paid_amount"
+                                                               value="" autocomplete="off">
+                                                        <h5 id="result_r4">0</h5>
+
+                                                    </div>
+                                                    <div class="order_row total">
+                                                        <h5>Additional Driver (راننده ی اضافه)</h5>
+                                                        <input type="hidden" id="paid_amount" name="paid_amount"
+                                                               value="" autocomplete="off">
+                                                        <h5 id="result_r5">0</h5>
+
+                                                    </div>
+                                                    <div class="order_row total">
+                                                        <h5>Super CDW (معافیت از خسارت وارد شده به ماشین)</h5>
+                                                        <input type="hidden" id="paid_amount" name="paid_amount"
+                                                               value="" autocomplete="off">
+                                                        <h5 id="result_r6">0</h5>
+
+                                                    </div>
+
+                                                    <div class="order_row total">
+                                                        <h5>مبلغی که الان می بایست واریز شود</h5>
+                                                        <input type="hidden" id="now_pay" name="now_paid_amount"
+                                                               value="" autocomplete="off">
+                                                        <h5 id="total_be_paid">{% widthratio cars.unit_price 1 2 %}</h5>
+
+                                                    </div>
+                                                    <div class="order_row total">
+
+                                                        <h5>مبلغی که بعدا در محل (در دبی) واریز می شود</h5>
+                                                        <input type="hidden" id="later_pay" name="later_paid_amount"
+                                                               value="0" autocomplete="off">
+                                                        <h5 id="pendingamounttext">0</h5>
+                                                    </div>
+                                                </div>
+                                                <div class="order_row total">
+                                                    <h5>مبلغ کل</h5>
+                                                    <input type="hidden" id="total_amount1" name="paid_amount"
+                                                           value="0"
+                                                           autocomplete="off">
+                                                    <h5 id="completeamounttext"></h5>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div id="col-md-12">
+                                                    <button type="button" onclick="checkloc()"
+                                                            style="background-color: #1c6ba8;border-radius: 5px"
+                                                            class="rev-sbutton-blue">مرحله بعد
+                                                    </button>
+
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                {#                                {% endfor %}#}
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="days" id="days" value="2">
+                </form>
+            </div>
+
+
+        </div>
+
+    </section>
+    <script>
+
+        document.getElementById('completeamounttext').innerText =
+        {{ times.total_cost }} *
+        105 / 100
+        let complete_amount = Number(document.getElementById('completeamounttext').innerText)
+        document.getElementById('pendingamounttext').innerText = complete_amount - (({{ times.duration }} -2) * {{ cars.unit_price }})
+        document.getElementById('total_amount1').value = complete_amount
+        document.getElementById('later_pay').value = complete_amount - (({{ times.duration }} -2) * {{ cars.unit_price }})
+        document.getElementById('now_pay').value =
+        {{ cars.unit_price }} *
+        2
+
+
+        if (document.getElementById('cbx3797').checked) {
+            let val = document.getElementById('cbx3797').value
+            document.getElementById('pickup_air_terminal').value = val
+        }
+
+        function myFunction1() {
+            var completeAmountText = Number(document.getElementById("completeamounttext").innerText);
+            var checkBox1 = document.getElementById("r1");
+            var pendingamount = Number(document.getElementById("pendingamounttext").innerText);
+            var totalBePaid = Number(document.getElementById("total_be_paid").value);
+            var tax = 0.05;
+            var dropOff = Number(document.getElementById("result_r2").innerText);
+            var infantBabySeats = Number(document.getElementById("result_r3").innerText);
+            var yearPlus = Number(document.getElementById("result_r4").innerText);
+            var additionalDriver = Number(document.getElementById("result_r5").innerText);
+            var superCDW = Number(document.getElementById("result_r6").innerText);
+            var numVal1 = Number(document.getElementById("ttttvaluess").innerText);
+            var result1 = " ";
+            var completeAmount = 0;
+            var result_total_be_paid = 0;
+
+            if (checkBox1.checked == true) {
+                var lg1 = Number(document.getElementById("r1").value);
+                result1 = lg1 + " ";
+                completeAmount = lg1 + completeAmountText
+                document.getElementById("completeamounttext").innerText = completeAmount;
+                document.getElementById('total_amount1').value = completeAmount
+                document.getElementById('picklbl').style.color = '#0065b4'
+                if (!document.getElementById('discount').checked) {
+                    document.getElementById('pendingamounttext').innerText = pendingamount + lg1
+                    document.getElementById('later_pay').value = pendingamount + lg1
+                }
+            } else {
+                var lg1 = Number(document.getElementById("r1").value);
+                result1 = 0;
+                completeAmount = completeAmountText - lg1;
+                document.getElementById("completeamounttext").innerText = completeAmount;
+                document.getElementById('total_amount1').value = completeAmount
+                document.getElementById('picklbl').style.color = '#747474'
+                if (!document.getElementById('discount').checked) {
+                    document.getElementById('pendingamounttext').innerText = pendingamount - lg1
+                    document.getElementById('later_pay').value = pendingamount - lg1
+                }
+            }
+            document.getElementById("result_r1").innerHTML = result1;
+
+
+        }
+
+        function myFunction2() {
+            var completeAmountText = Number(document.getElementById("completeamounttext").innerText);
+            var completeAmount = 0;
+            var checkBox2 = document.getElementById("r2");
+            var result2 = " ";
+            var pendingamount = Number(document.getElementById("pendingamounttext").innerText);
+
+            if (checkBox2.checked == true) {
+                let lg2 = Number(document.getElementById('r2').value)
+                result2 = lg2 + ' '
+                completeAmount = lg2 + completeAmountText
+                document.getElementById('completeamounttext').innerText = completeAmount;
+                document.getElementById('total_amount1').value = completeAmount
+                document.getElementById('droplbl').style.color = '#0065b4';
+                if (!document.getElementById('discount').checked) {
+                    document.getElementById('pendingamounttext').innerText = pendingamount + lg2
+                    document.getElementById('later_pay').value = pendingamount + lg2
+                }
+            } else {
+                result2 = 0
+                var lg2 = Number(document.getElementById("r2").value);
+                completeAmount = completeAmountText - lg2;
+                document.getElementById("completeamounttext").innerText = completeAmount;
+                document.getElementById('total_amount1').value = completeAmount
+                document.getElementById('droplbl').style.color = '#747474'
+                if (!document.getElementById('discount').checked) {
+                    document.getElementById('pendingamounttext').innerText = pendingamount - lg2
+                    document.getElementById('later_pay').value = pendingamount - lg2
+                }
+            }
+            document.getElementById('result_r2').innerText = result2;
+        }
+
+        function myFunction3() {
+            var completeAmountText = Number(document.getElementById("completeamounttext").innerText);
+            var timesDuration = Number(document.getElementById("times_duration").value);
+            var completeAmount = 0;
+            var checkBox3 = document.getElementById("r3");
+            var result3 = 0;
+            var result33 = 0;
+            var pendingamount = Number(document.getElementById("pendingamounttext").innerText);
+
+            if (checkBox3.checked == true) {
+                var lg3 = Number(document.getElementById("r3").value);
+                result3 = lg3;
+                completeAmount = completeAmountText + result3;
+                document.getElementById("completeamounttext").innerText = completeAmount;
+                document.getElementById('total_amount1').value = completeAmount
+                document.getElementById('babylbl').style.color = '#0065b4'
+                if (!document.getElementById('discount').checked) {
+                    document.getElementById('pendingamounttext').innerText = pendingamount + lg3
+                    document.getElementById('later_pay').value = pendingamount + lg3
+                }
+            } else {
+                result3 = 0
+                var lg3 = Number(document.getElementById("r3").value);
+                result33 = lg3;
+                completeAmount = completeAmountText - result33;
+                document.getElementById("completeamounttext").innerText = completeAmount;
+                document.getElementById('total_amount1').value = completeAmount
+                document.getElementById('babylbl').style.color = '#747474'
+                if (!document.getElementById('discount').checked) {
+                    document.getElementById('pendingamounttext').innerText = pendingamount - lg3
+                    document.getElementById('later_pay').value = pendingamount - lg3
+                }
+            }
+            return document.getElementById("result_r3").innerHTML = result3;
+        }
+
+        function myFunction4() {
+            var completeAmountText = Number(document.getElementById("completeamounttext").innerText);
+            var timesDuration = Number(document.getElementById("times_duration").value);
+            var completeAmount = 0;
+            var checkBox4 = document.getElementById("r4");
+            var result4 = 0;
+            var result44 = 0;
+            var pendingamount = Number(document.getElementById("pendingamounttext").innerText);
+
+            if (checkBox4.checked == true) {
+                var lg4 = Number(document.getElementById("r4").value);
+                result4 = lg4;
+                completeAmount = completeAmountText + result4;
+                document.getElementById("completeamounttext").innerText = completeAmount;
+                document.getElementById('total_amount1').value = completeAmount
+                document.getElementById('yearlbl').style.color = '#0065b4'
+                if (!document.getElementById('discount').checked) {
+                    document.getElementById('pendingamounttext').innerText = pendingamount + lg4
+                    document.getElementById('later_pay').value = pendingamount + lg4
+                }
+
+            } else {
+                result4 = 0
+                var lg4 = Number(document.getElementById("r4").value);
+                result44 = lg4;
+                completeAmount = completeAmountText - result44;
+                document.getElementById("completeamounttext").innerText = completeAmount;
+                document.getElementById('total_amount1').value = completeAmount
+                document.getElementById('yearlbl').style.color = '#747474'
+                if (!document.getElementById('discount').checked) {
+                    document.getElementById('pendingamounttext').innerText = pendingamount - lg4
+                    document.getElementById('later_pay').value = pendingamount - lg4
+                }
+
+
+            }
+            return document.getElementById("result_r4").innerHTML = result4;
+        }
+
+        function myFunction5() {
+            var completeAmountText = Number(document.getElementById("completeamounttext").innerText);
+            var timesDuration = Number(document.getElementById("times_duration").value);
+            var completeAmount = 0;
+            var checkBox5 = document.getElementById("r5");
+            var result5 = 0;
+            var result55 = 0;
+            var pendingamount = Number(document.getElementById("pendingamounttext").innerText);
+
+            if (checkBox5.checked == true) {
+                var lg5 = Number(document.getElementById("r5").value);
+                result5 = lg5;
+                completeAmount = completeAmountText + result5;
+                document.getElementById("completeamounttext").innerText = completeAmount;
+                document.getElementById('total_amount1').value = completeAmount
+                document.getElementById('addlbl').style.color = '#0065b4'
+                if (!document.getElementById('discount').checked) {
+                    document.getElementById('pendingamounttext').innerText = pendingamount + lg5
+                    document.getElementById('later_pay').value = pendingamount + lg5
+                }
+
+            } else {
+                result5 = 0
+                var lg5 = Number(document.getElementById("r5").value);
+                result55 = lg5;
+                completeAmount = completeAmountText - result55;
+                document.getElementById("completeamounttext").innerText = completeAmount;
+                document.getElementById('total_amount1').value = completeAmount
+                document.getElementById('addlbl').style.color = '#747474'
+                if (!document.getElementById('discount').checked) {
+                    document.getElementById('pendingamounttext').innerText = pendingamount - lg5
+                    document.getElementById('later_pay').value = pendingamount - lg5
+                }
+
+            }
+            return document.getElementById("result_r5").innerHTML = result5;
+        }
+
+        function myFunction6() {
+            var completeAmountText = Number(document.getElementById("completeamounttext").innerText);
+            var timesDuration = Number(document.getElementById("times_duration").value);
+            var completeAmount = 0;
+            var checkBox6 = document.getElementById("r6");
+            var result6 = 0;
+            var result66 = 0;
+            var pendingamount = Number(document.getElementById("pendingamounttext").innerText);
+
+            if (checkBox6.checked == true) {
+                var lg6 = Number(document.getElementById("r6").value);
+                result6 = lg6;
+                completeAmount = completeAmountText + result6;
+                document.getElementById("completeamounttext").innerText = completeAmount;
+                document.getElementById('total_amount1').value = completeAmount
+                document.getElementById('cdwlbl').style.color = '#0065b4'
+                if (!document.getElementById('discount').checked) {
+                    document.getElementById('pendingamounttext').innerText = pendingamount + lg6
+                    document.getElementById('later_pay').value = pendingamount + lg6
+                }
+
+            } else {
+                result6 = 0
+                var lg6 = Number(document.getElementById("r6").value);
+                result66 = lg6;
+                completeAmount = completeAmountText - result66;
+                document.getElementById("completeamounttext").innerText = completeAmount;
+                document.getElementById('total_amount1').value = completeAmount
+                document.getElementById('cdwlbl').style.color = '#747474'
+                if (!document.getElementById('discount').checked) {
+                    document.getElementById('pendingamounttext').innerText = pendingamount - lg6
+                    document.getElementById('later_pay').value = pendingamount - lg6
+                }
+
+            }
+            return document.getElementById("result_r6").innerHTML = result6;
+        }
+
+        {#----------------------#}
+
+        function hideShowpick(val) {
+            if (val == 1) {
+                document.getElementById('renthubpick').style.display = 'block'
+                document.getElementById('doorstepspick').style.display = 'none'
+                document.getElementById('airportpick').style.display = 'none'
+                document.getElementById('pick_loc').value = 1
+            }
+            if (val == 2) {
+                document.getElementById('renthubpick').style.display = 'none'
+                document.getElementById('doorstepspick').style.display = 'block'
+                document.getElementById('airportpick').style.display = 'none'
+                document.getElementById('pick_loc').value = 2
+            }
+            if (val == 3) {
+                document.getElementById('renthubpick').style.display = 'none'
+                document.getElementById('doorstepspick').style.display = 'none'
+                document.getElementById('airportpick').style.display = 'block'
+                document.getElementById('pick_loc').value = 3
+            }
+        }
+
+        {#----------------------#}
+
+        function hideShowreturn(val) {
+            if (val == 4) {
+                document.getElementById('renthubreturn').style.display = 'block'
+                document.getElementById('doorstepsreturn').style.display = 'none'
+                document.getElementById('airportreturn').style.display = 'none'
+                document.getElementById('return_self_place').value = null
+                {#document.getElementById('return_airport').value = null#}
+            }
+            if (val == 5) {
+                document.getElementById('renthubreturn').style.display = 'none'
+                document.getElementById('doorstepsreturn').style.display = 'block'
+                document.getElementById('airportreturn').style.display = 'none'
+            }
+            if (val == 6) {
+                document.getElementById('renthubreturn').style.display = 'none'
+                document.getElementById('doorstepsreturn').style.display = 'none'
+                document.getElementById('airportreturn').style.display = 'block'
+                document.getElementById('return_self_place').value = null
+            }
+            document.getElementById('return_alert').style.display = 'none'
+        }
+
+        {#----------------------#}
+
+        function getDiscount() {
+            {#var ttttvaluess = Number(document.getElementById("ttttvaluess").innerText;#}
+            var fullAmountCode = Number(document.getElementById("fullamountcode").value);
+            var tax = 0.05;
+            var pickUp = Number(document.getElementById("result_r1").innerText);
+            var dropOff = Number(document.getElementById("result_r2").innerText);
+            var infantBabySeats = Number(document.getElementById("result_r3").innerText);
+            var yearPlus = Number(document.getElementById("result_r4").innerText);
+            var additionalDriver = Number(document.getElementById("result_r5").innerText);
+            var superCDW = Number(document.getElementById("result_r6").innerText);
+            var totalbepaid = Number(document.getElementById("total_be_paid").innerText);
+            var pendingAmountText = Number(document.getElementById("pendingamounttext").innerText);
+            var completeAmountText = Number(document.getElementById("completeamounttext").innerText);
+            var numVal1 = Number(document.getElementById("ttttvaluess").innerText);
+            var numVal2 = 0.03;
+            var completeAmountValue = (tax * numVal1) + numVal1 + pickUp + dropOff + infantBabySeats + yearPlus + additionalDriver + superCDW;
+
+            if (document.getElementById('discount').checked) {
+                var totalDiscountValue = completeAmountValue * numVal2
+                document.getElementById("discountvalue").innerText = totalDiscountValue.toFixed(2);
+                document.getElementById("completeamounttext").innerText = completeAmountValue - totalDiscountValue;
+                document.getElementById('total_amount1').value = completeAmountValue - totalDiscountValue;
+                document.getElementById("pendingamounttext").innerText = 0;
+                document.getElementById('later_pay').value = 0
+                document.getElementById('total_be_paid').innerText = completeAmountValue * 97 / 100
+                document.getElementById('now_pay').value = completeAmountValue * 97 / 100
+
+            } else {
+                document.getElementById("discountvalue").innerText = 0;
+                document.getElementById("completeamounttext").innerText = completeAmountValue;
+                document.getElementById('total_amount1').value = completeAmountValue;
+                document.getElementById('later_pay').value = completeAmountValue - ({{ cars.unit_price }} * 2
+            )
+                ;
+                document.getElementById("pendingamounttext").innerText = completeAmountValue - ({{ cars.unit_price }} * 2
+            )
+                ;
+                document.getElementById('total_be_paid').innerText =
+                    {% widthratio cars.unit_price 1 2 %}
+                    document.getElementById('now_pay').value =
+                {% widthratio cars.unit_price 1 2 %}
+            }
+
+
+        }
+
+        {#----------------------#}
+
+
+        $("#startDatePicker").datetimepicker({
+            changeMonth: true,
+            format: 'yy-mm-dd'
+        });
+
+        $("#endDatePicker").datetimepicker({
+            changeMonth: true,
+            format: 'yy-mm-dd',
+            minDate: new Date(new Date().getTime() + 259200000)
+        });
+
+
+        function calcDuration() {
+            var date1 = new Date($("#startDatePicker").val());
+            var date2 = new Date($("#endDatePicker").val());
+
+            var timeDifference = date2.getTime() - date1.getTime();
+
+            var milliSecondsInOneSecond = 1000;
+            var secondInOneHour = 3600;
+            var hoursInOneDay = 24;
+
+            var daysdiff = Math.trunc(timeDifference / (milliSecondsInOneSecond * secondInOneHour * hoursInOneDay))
+            document.getElementById("dayscount").innerText = daysdiff + " " + "روز";
+            let total_price =
+            {{ cars.unit_price }} *
+            Number(daysdiff)
+            document.getElementById('tttotaldays').innerText = daysdiff + ' * ' + {{ cars.unit_price }};
+            document.getElementById('ttttvaluess').innerText = total_price
+            document.getElementById('days').value = daysdiff
+            document.getElementById('r3').value = 15 * daysdiff
+            document.getElementById('r4').value = 15 * daysdiff
+            document.getElementById('r5').value = 15 * daysdiff
+            document.getElementById('r6').value = 35 * daysdiff
+            document.getElementById('priceforrental').innerText =
+            {{ cars.unit_price }} *
+            daysdiff + ' درهم'
+        }
+
+        {#----------------------#}
+        $('.pradio').on('change', function () {
+            alert(this.value)
+            document.getElementById('pickup_air_terminal').value = this.value
+        })
+
+
+        function checkloc() {
+            const pickupradios = document.querySelectorAll('input[name="pickup_location_category"]');
+            const returnradios = document.querySelectorAll('input[name="return_location_category"]');
+            let pcounter = 0
+            let rcounter = 0
+            for (const radio of pickupradios) {
+                if (radio.checked) {
+                    pcounter = 1
+                    break;
+                }
+            }
+            if (pcounter === 0) {
+                let alert = document.getElementById('pickup_alert')
+                alert.style.display = 'block'
+                alert.innerText = 'لطفا محل دریافت خودرو را مشخص نمایید!'
+                window.scrollTo(0, Position(alert))
+            }
+
+
+            for (const radio of returnradios) {
+                if (radio.checked) {
+                    rcounter = 1
+                    break
+                }
+            }
+
+            if (rcounter === 0) {
+                let alert = document.getElementById('return_alert')
+                alert.style.display = 'block'
+                alert.innerText = 'لطفا محل تحویل خودرو را مشخص نمایید!'
+                window.scrollTo(0, Position(alert))
+            }
+
+            let return_doorstep = document.getElementById('return_self_place').value
+            let doorstep_radio = document.getElementById('return_2')
+            let return_door_checker = 1
+            if (doorstep_radio.checked) {
+                if (!return_doorstep) {
+                    return_door_checker = 0
+                    let alert = document.getElementById('return_alert')
+                    alert.style.display = 'block'
+                    alert.innerText = 'آدرس خودتان در دبی برای تحویل ماشین بنویسید!'
+                    window.scrollTo(0, Position(alert))
+                } else {
+                    let alert = document.getElementById('return_alert')
+                    alert.style.display = 'none'
+                    return_door_checker = 1
+                }
+            }else{
+                return_door_checker = 1
+            }
+
+
+            let pickup_doorstep_radio = document.getElementById('opt2')
+            let pickup_doorstep = document.getElementById('pickup_self_place').value
+            let pickup_door_checker = 1
+            if (pickup_doorstep_radio.checked) {
+                if (!pickup_doorstep) {
+                    pickup_door_checker = 0
+                    let alert = document.getElementById('pickup_alert')
+                    alert.style.display = 'block'
+                    alert.innerText = 'آدرس خودتان در دبی برای دریافت ماشین بنویسید!'
+                    window.scrollTo(0, Position(alert))
+                } else {
+                    let alert = document.getElementById('pickup_alert')
+                    alert.style.display = 'none'
+                    pickup_door_checker = 1
+                }
+            }else{
+                pickup_door_checker = 1
+            }
+
+
+            if (pcounter === 1 && rcounter === 1 && return_door_checker === 1 && pickup_door_checker === 1) {
+                document.getElementById('myForm').submit()
+            }
+
+
+
+            function Position(obj) {
+                var currenttop = 0;
+                if (obj.offsetParent) {
+                    do {
+                        currenttop += obj.offsetTop - 60;
+                    } while ((obj = obj.offsetParent));
+                    return [currenttop];
+                }
+            }
+
+        }
+
+    </script>
+
+{% endblock %}

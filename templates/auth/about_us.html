@@ -1,0 +1,289 @@
+{% extends 'nav.html' %}
+{% load static %}
+{% block title %}
+    About Us
+{% endblock %}
+{% block style %}
+{% endblock %}
+{% block body %}
+    <!--Content Section Start-->
+    <div id="content">
+        <section class="banner2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 ">
+                        <h1>درباره ما</h1>
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <ol class="breadcrumb">
+                            <li>
+                                <a href="{% url 'home:home' %}">خانه</a>
+                            </li>
+                            <li class="active">
+                                <a href="{% url 'home:about_us' %}">درباره ما</a>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="aboutus-content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12">
+                        <div class="main-image-block">
+                            <img src="{% static 'assets/images/aboutus-main.jpg' %}" alt=""/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-7">
+                        <div class="approach-block">
+                            <h5 class="view-title-style">رویکرد ما</h5>
+                            <blockquote class="clearfix">
+                                <span class="quote-icon">’’</span>
+                                <span class="client-pic"> <img src="{% static 'assets/images/client-pic.png' %}" alt=""/> </span>
+                                <div class="client-msg">
+                                    <p>
+                                        لورم ایپسوم متن سه، شنریجاد کرد، در این صورت می توان امید داشت که تمام و دشواری
+                                        موجود در ارائه راهکارها
+                                    </p>
+                                </div>
+                            </blockquote>
+                            <p>
+                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک
+                                است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط
+                                فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد،
+                                کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می
+                                طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و
+                                فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری
+                                موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی
+                                دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار
+                                گیرد.
+                            </p>
+                            <p>
+                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک
+                                است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط
+                                فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد،
+                                کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می
+                                طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و
+                                فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری
+                                موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی
+                                دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار
+                                گیرد.
+                            </p>
+                        </div>
+                        <ul class="feature-block">
+                            <li>
+                                <i class="fa fa-users" aria-hidden="true"></i>
+                                <strong>تیم پشتیبانی بزرگ</strong>
+                            </li>
+                            <li>
+                                <i class="fa fa-user-secret" aria-hidden="true"></i>
+                                <strong>بهترین مشاور شرکت</strong>
+                            </li>
+                            <li>
+                                <i class="fa fa-life-ring" aria-hidden="true"></i>
+                                <strong>پشتیبانی 24/7 از سیستم</strong>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-12 col-sm-5">
+                        <div class="view-features">
+                            <div class="features-point">
+                                <h5 class="view-title-style"><strong>01</strong><small>&nbsp;</small>شروع</h5>
+                                <p>
+                                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
+                                    گرافیک است.
+                                </p>
+                            </div>
+
+                            <div class="features-point">
+                                <h5 class="view-title-style"><strong>02</strong><small>&nbsp;</small>چانه زدن</h5>
+                                <p>
+                                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
+                                    گرافیک است.
+                                </p>
+                            </div>
+
+                            <div class="features-point">
+                                <h5 class="view-title-style"><strong>03</strong><small>&nbsp;</small>رانندگی</h5>
+                                <p>
+                                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
+                                    گرافیک است.
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12">
+                        <div class="rent-block">
+                            <h2>ما به تجارت خود افتخار می کنیم!<span>یعنی اجاره اتوموبیل</span></h2>
+                            <h2 class="second-title">چرا ما بهترین هستیم؟</h2>
+                            <div class="rent-car-img">
+                                <figure>
+                                    <img src="{% static 'assets/images/rent-car-img.png' %}" alt="car-img"/>
+                                </figure>
+
+                                <div class="main-features set-position1">
+
+                                    <div class="circle-section">
+                                        <div class="circle-icon">
+                                            <small>&nbsp;</small>
+                                        </div>
+                                        <div class="protect-block">
+                                            <strong>سطح حفاظت بالا</strong>
+                                            <p>
+                                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده
+                                                از طراحان گرافیک است.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="main-features set-position2">
+
+                                    <div class="circle-section">
+                                        <div class="circle-icon">
+                                            <small>&nbsp;</small>
+                                        </div>
+                                        <div class="protect-block">
+                                            <strong>سطح حفاظت بالا</strong>
+                                            <p>
+                                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده
+                                                از طراحان گرافیک است.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="main-features set-position3">
+
+                                    <div class="circle-section">
+                                        <div class="circle-icon">
+                                            <small>&nbsp;</small>
+                                        </div>
+                                        <div class="protect-block">
+                                            <strong>سطح حفاظت بالا</strong>
+                                            <p>
+                                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده
+                                                از طراحان گرافیک است.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="main-features set-position4">
+
+                                    <div class="circle-section">
+                                        <div class="circle-icon">
+                                            <small>&nbsp;</small>
+                                        </div>
+                                        <div class="protect-block">
+                                            <strong>سطح حفاظت بالا</strong>
+                                            <p>
+                                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده
+                                                از طراحان گرافیک است.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <section class="offer-wrap">
+            <div class="offer-overlay">
+                &nbsp;
+            </div>
+            <div class="offer-cont">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-9">
+                            <h2> همین الان ماشین <span> بگیر </span></h2>
+                            <p>
+                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک
+                                است.
+                            </p>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-3">
+                            <a href="#" class="offer-btn"> دریافت پیشنهادات </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="co-founder-section reviews">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+                        <div class="co-founder">
+                            <ul class="owl-carousel owl-theme review-profile">
+                                <li class="item">
+                                    <figure>
+                                        <img src="{% static 'assets/images/girl.png' %}" alt=""/>
+                                    </figure>
+                                    <h5 class="view-title-style">جان دو</h5>
+                                    <strong>بنیانگذار شرکت لتس درایو</strong>
+                                    <p>
+                                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
+                                        گرافیک است.
+                                    </p>
+                                </li>
+                                <li class="item">
+                                    <figure>
+                                        <img src="{% static 'assets/images/girl.png' %}" alt=""/>
+                                    </figure>
+                                    <h5 class="view-title-style">جان دو</h5>
+                                    <strong>بنیانگذار شرکت لتس درایو</strong>
+                                    <p>
+                                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
+                                        گرافیک است.
+                                    </p>
+                                </li>
+                                <li class="item">
+                                    <figure>
+                                        <img src="{% static 'assets/images/girl.png' %}" alt=""/>
+                                    </figure>
+                                    <h5 class="view-title-style">جان دو</h5>
+                                    <strong>بنیانگذار شرکت لتس درایو</strong>
+                                    <p>
+                                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
+                                        گرافیک است.
+                                    </p>
+                                </li>
+                                <li class="item">
+                                    <figure>
+                                        <img src="{% static 'assets/images/girl.png' %}" alt=""/>
+                                    </figure>
+                                    <h5 class="view-title-style">جان دو</h5>
+                                    <strong>بنیانگذار شرکت لتس درایو</strong>
+                                    <p>
+                                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
+                                        گرافیک است.
+                                    </p>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+    <!--Content Section End-->
+
+{% endblock %}
