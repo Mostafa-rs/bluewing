@@ -20,7 +20,7 @@ class OrderAdmin(admin.ModelAdmin):
                     , 'create', 'sex', 'phone', 'nationality', 'city', 'date_of_birth',]
     inlines = [ItemInlines]
     list_editable = ('paid',)
-    readonly_fields = ('later_pay_cost', 'later_pay_cost', 'total_cost')
+    readonly_fields = ('now_pay_cost', 'later_pay_cost', 'total_cost')
 
 
 

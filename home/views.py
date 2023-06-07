@@ -7,6 +7,7 @@ from django.shortcuts import render, get_object_or_404, redirect, get_list_or_40
 from .filters import CarsFilter
 from .forms import *
 from .models import *
+from django.db.models import Q
 
 
 # home_view
@@ -71,7 +72,6 @@ def car_detail(request, id):
     cars = Car.objects.all()
     category = Category.objects.filter(sub_cat=False)
     similar = car.tags.similar_objects()[:4]
-
     is_like = False
     if car.like.filter(id=request.user.id).exists():
         is_like = True
@@ -133,9 +133,8 @@ def find_car(request):
         form = FindCarForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
+            Times.objects.filter(Q(user_id=request.user.id) | Q(session_key=request.session.session_key)).delete()
             if request.user.is_authenticated:
-                if Times.objects.filter(user_id=request.user.id, session_key=None).exists():
-                    Times.objects.filter(user_id=request.user.id, session_key=None).delete()
                 user_time = Times.objects.create(user_id=request.user.id, session_key=None,
                                                  pickup_time=data['pickup_time'],
                                                  pickup_date=data['pickup_date'], return_date=data['return_date'],
@@ -143,12 +142,11 @@ def find_car(request):
             else:
                 if not request.session.session_key:
                     request.session.create()
-                if Times.objects.filter(user_id=None, session_key=request.session.session_key).exists():
-                    Times.objects.filter(user_id=None, session_key=request.session.session_key).delete()
                 user_time = Times.objects.create(user_id=None, session_key=request.session.session_key,
                                                  pickup_time=data['pickup_time'],
                                                  pickup_date=data['pickup_date'], return_date=data['return_date'],
                                                  return_time=data['return_time'])
+                request.session['s_key'] = request.session.session_key
         # print(type(user_time.duration))
     #     if request.user.is_authenticated:
     #         cars = get_object_or_404(Car, id=id)

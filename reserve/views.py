@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from order.models import Order, ItemOrder
 from .models import *
+from django.db.models import Q
 
 
 # Create your views here.
@@ -20,9 +21,11 @@ def reserve_details(request):
 @login_required(login_url='accounts:login')
 def add_reserve(request, id):
     session_key = request.session.get('s_key')
+    print(session_key)
+    print(request.session.session_key)
     car = Car.objects.get(id=id)
-    if Times.objects.filter(session_key=session_key).exists():
-        time = Times.objects.get(session_key=session_key)
+    if Times.objects.filter(Q(session_key=session_key) | Q(session_key=request.session.session_key)).exists():
+        time = Times.objects.get(Q(session_key=session_key) | Q(session_key=request.session.session_key))
     elif Times.objects.filter(user_id=request.user.id).exists():
         time = Times.objects.get(user_id=request.user.id)
     else:
@@ -35,14 +38,11 @@ def add_reserve(request, id):
     time.car = car
     time.user = request.user
     time.save()
-    if session_key:
-        del request.session['s_key']
     return redirect('reserve:reserve_details')
 
 
 def next_level(request):
     pickup_loc = request.POST.get('pickup_location_category')
-    print(pickup_loc)
     pickup_date = request.POST.get('pickup_date')
     pickup_time = request.POST.get('pickup_time')
     return_date = request.POST.get('return_date')
@@ -137,5 +137,7 @@ def next_level(request):
     else:
         if item_order.extra_services.filter(id=Extras.objects.get(name__icontains='cdw').id).exists():
             item_order.extra_services.remove(Extras.objects.get(name__icontains='cdw'))
+
+
 
     return redirect('order:order_details')

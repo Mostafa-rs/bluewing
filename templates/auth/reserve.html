@@ -967,7 +967,7 @@
                             <div class="row">
                                 <div id="col-md-12">
 
-                                    <button type="submit"
+                                    <button type="button"
                                             onclick="calcDuration()"
                                             class="rev-sbutton-blue">محاسبه مدت زمان اجاره
                                     </button>
@@ -992,6 +992,7 @@
                                     <label class="selection_value">
                                         {#                                        {% for dates in times %}#}
                                         <span id="dayscount">{{ times.duration }} روز </span>
+{#                                        <input type="text" name="" id="days_val" value="{{ times.duration }}">#}
                                         {#                                        {% endfor %}#}
                                     </label>
 
@@ -1260,7 +1261,8 @@
                                                                 <textarea cols="20" name="return_user_address"
                                                                           style="width: 100%; height: 148px; margin-top: 0px; margin-bottom: 0px;"
                                                                           id="return_self_place"
-                                                                          class="ng-pristine ng-untouched ng-valid ng-empty" placeholder="آدرس خودتان در دبی برای تحویل ماشین تایپ کنید..."></textarea>
+                                                                          class="ng-pristine ng-untouched ng-valid ng-empty"
+                                                                          placeholder="آدرس خودتان در دبی برای تحویل ماشین تایپ کنید..."></textarea>
 
 
                                             </div>
@@ -1496,17 +1498,19 @@
                                             <div class="custom_checkbox" id="discount3percent" style="">
                                                 <input class="inp-cbx" id="discount" type="checkbox"
                                                        name="full_pay" onclick="getDiscount()" value="1">
-                                                {% if times.duration > 2 %}
-                                                    <label class="cbx" for="discount">
+
+                                                <label class="cbx" for="discount"
+                                                       {% if not times.duration > 2 %}style="display: none"{% endif %}
+                                                       id="disc_id">
                                                                 <span>
                                                                     <svg width="12px" height="10px" viewBox="0 0 12 10">
                                                                         <polyline
                                                                                 points="1.5 6 4.5 9 10.5 1"></polyline>
                                                                     </svg>
                                                                 </span>
-                                                        <span style="color:black">با پرداخت کامل مبلغ، 3% تخفیف بگیرید</span>
-                                                    </label>
-                                                {% endif %}
+                                                    <span style="color:black">با پرداخت کامل مبلغ، 3% تخفیف بگیرید</span>
+                                                </label>
+                                                {#                                                {% endif %}#}
                                             </div>
                                             <br>
                                             <div class="order_info">
@@ -1578,7 +1582,7 @@
 
                                                     <div class="order_row total">
                                                         <h5>مبلغی که الان می بایست واریز شود</h5>
-                                                        <input type="hidden" id="now_pay" name="now_paid_amount"
+                                                        <input type="text" id="now_pay" name="now_paid_amount"
                                                                value="" autocomplete="off">
                                                         <h5 id="total_be_paid">{% widthratio cars.unit_price 1 2 %}</h5>
 
@@ -1586,14 +1590,14 @@
                                                     <div class="order_row total">
 
                                                         <h5>مبلغی که بعدا در محل (در دبی) واریز می شود</h5>
-                                                        <input type="hidden" id="later_pay" name="later_paid_amount"
+                                                        <input type="text" id="later_pay" name="later_paid_amount"
                                                                value="0" autocomplete="off">
                                                         <h5 id="pendingamounttext">0</h5>
                                                     </div>
                                                 </div>
                                                 <div class="order_row total">
                                                     <h5>مبلغ کل</h5>
-                                                    <input type="hidden" id="total_amount1" name="paid_amount"
+                                                    <input type="text" id="total_amount1" name="paid_amount"
                                                            value="0"
                                                            autocomplete="off">
                                                     <h5 id="completeamounttext"></h5>
@@ -1626,14 +1630,18 @@
 
     </section>
     <script>
-
-        document.getElementById('completeamounttext').innerText =
-        {{ times.total_cost }} *
-        105 / 100
-        let complete_amount = Number(document.getElementById('completeamounttext').innerText)
-        document.getElementById('pendingamounttext').innerText = complete_amount - (({{ times.duration }} -2) * {{ cars.unit_price }})
-        document.getElementById('total_amount1').value = complete_amount
-        document.getElementById('later_pay').value = complete_amount - (({{ times.duration }} -2) * {{ cars.unit_price }})
+        document.getElementById('completeamounttext').innerText = {{ times.total_cost }} * 105 / 100;
+        let complete_amount = Number(document.getElementById('completeamounttext').innerText);
+        document.getElementById('total_amount1').value = complete_amount;
+        if ({{ times.duration }} > 2){
+            document.getElementById('later_pay').value = (({{ times.duration }} * {{ cars.unit_price }}) - (2 * {{ cars.unit_price }}))+({{ times.duration }} * {{ cars.unit_price }} * 5 / 100);
+            document.getElementById('pendingamounttext').innerText = (({{ times.duration }} * {{ cars.unit_price }}) - (2 * {{ cars.unit_price }}))+({{ times.duration }} * {{ cars.unit_price }} * 5 / 100);
+        }
+        else
+        {
+            document.getElementById('later_pay').value = 0
+            document.getElementById('pendingamounttext').innerText = 0
+        }
         document.getElementById('now_pay').value =
         {{ cars.unit_price }} *
         2
@@ -1841,6 +1849,7 @@
             var checkBox6 = document.getElementById("r6");
             var result6 = 0;
             var result66 = 0;
+            let daysdiff = document.getElementById()
             var pendingamount = Number(document.getElementById("pendingamounttext").innerText);
 
             if (checkBox6.checked == true) {
@@ -1952,16 +1961,10 @@
                 document.getElementById("discountvalue").innerText = 0;
                 document.getElementById("completeamounttext").innerText = completeAmountValue;
                 document.getElementById('total_amount1').value = completeAmountValue;
-                document.getElementById('later_pay').value = completeAmountValue - ({{ cars.unit_price }} * 2
-            )
-                ;
-                document.getElementById("pendingamounttext").innerText = completeAmountValue - ({{ cars.unit_price }} * 2
-            )
-                ;
-                document.getElementById('total_be_paid').innerText =
-                    {% widthratio cars.unit_price 1 2 %}
-                    document.getElementById('now_pay').value =
-                {% widthratio cars.unit_price 1 2 %}
+                document.getElementById('later_pay').value = completeAmountValue - ({{ cars.unit_price }} * 2);
+                document.getElementById("pendingamounttext").innerText = completeAmountValue - ({{ cars.unit_price }} * 2);
+                document.getElementById('total_be_paid').innerText = {% widthratio cars.unit_price 1 2 %}
+                document.getElementById('now_pay').value = {% widthratio cars.unit_price 1 2 %}
             }
 
 
@@ -1983,8 +1986,22 @@
 
 
         function calcDuration() {
+            var checkBox1 = document.getElementById("r1");
+            var checkBox2 = document.getElementById("r2");
+            var checkBox3 = document.getElementById("r3");
+            var checkBox4 = document.getElementById("r4");
+            var checkBox5 = document.getElementById("r5");
+            var checkBox6 = document.getElementById("r6");
             var date1 = new Date($("#startDatePicker").val());
             var date2 = new Date($("#endDatePicker").val());
+            console.log(date1, date2)
+            let now_pay_text = document.getElementById('total_be_paid')
+            let now_pay_value = document.getElementById('now_pay')
+            let later_pay_text = document.getElementById('pendingamounttext')
+            let later_pay_value = document.getElementById('later_pay')
+            let total_text = document.getElementById('completeamounttext')
+            let total_value = document.getElementById('total_amount1')
+            let days_val = document.getElementById('days_val')
 
             var timeDifference = date2.getTime() - date1.getTime();
 
@@ -1994,6 +2011,7 @@
 
             var daysdiff = Math.trunc(timeDifference / (milliSecondsInOneSecond * secondInOneHour * hoursInOneDay))
             document.getElementById("dayscount").innerText = daysdiff + " " + "روز";
+            {#days_val.value = daysdiff;#}
             let total_price =
             {{ cars.unit_price }} *
             Number(daysdiff)
@@ -2007,13 +2025,91 @@
             document.getElementById('priceforrental').innerText =
             {{ cars.unit_price }} *
             daysdiff + ' درهم'
+
+            let disc_id = document.getElementById('disc_id')
+            if (daysdiff > 2) {
+                disc_id.style.display = 'block'
+                now_pay_text.innerText = 2 * {{ cars.unit_price }};
+                now_pay_value.value = 2 * {{ cars.unit_price }};
+                later_pay_text.innerText = ((daysdiff - 2) * {{ cars.unit_price }}) + (daysdiff * {{ cars.unit_price }} * 5 / 100);
+                later_pay_value.value = (daysdiff - 2) * {{ cars.unit_price }}+(daysdiff * {{ cars.unit_price }} * 5 / 100);
+                total_text.innerText = daysdiff * {{ cars.unit_price }} * 105 / 100;
+                total_value.value = daysdiff * {{ cars.unit_price }} * 105 / 100;
+                if (checkBox1.checked) {
+                    let later_pay_text = document.getElementById('pendingamounttext')
+                    let later_pay_value = document.getElementById('later_pay')
+                    let total_text = document.getElementById('completeamounttext')
+                    let total_value = document.getElementById('total_amount1')
+                    later_pay_text.innerText = Number(later_pay_value.value) + 50
+                    later_pay_value.value = Number(later_pay_value.value) + 50
+                    total_text.innerText = Number(total_value.value) + 50;
+                    total_value.value = Number(total_value.value) + 50;
+                }
+                if (checkBox2.checked) {
+                    let later_pay_text = document.getElementById('pendingamounttext')
+                    let later_pay_value = document.getElementById('later_pay')
+                    let total_text = document.getElementById('completeamounttext')
+                    let total_value = document.getElementById('total_amount1')
+                    later_pay_text.innerText = Number(later_pay_value.value) + 50
+                    later_pay_value.value = Number(later_pay_value.value) + 50
+                    total_text.innerText = Number(total_value.value) + 50;
+                    total_value.value = Number(total_value.value) + 50;
+                }
+                if (checkBox3.checked) {
+                    let later_pay_text = document.getElementById('pendingamounttext')
+                    let later_pay_value = document.getElementById('later_pay')
+                    let total_text = document.getElementById('completeamounttext')
+                    let total_value = document.getElementById('total_amount1')
+                    later_pay_text.innerText = Number(later_pay_value.value) + (15 * daysdiff)
+                    later_pay_value.value = Number(later_pay_value.value) + (15 * daysdiff)
+                    total_text.innerText = Number(total_value.value) + (15 * daysdiff);
+                    total_value.value = Number(total_value.value) + (15 * daysdiff);
+                }
+                if (checkBox4.checked) {
+                    let later_pay_text = document.getElementById('pendingamounttext')
+                    let later_pay_value = document.getElementById('later_pay')
+                    let total_text = document.getElementById('completeamounttext')
+                    let total_value = document.getElementById('total_amount1')
+                    later_pay_text.innerText = Number(later_pay_value.value) + (15 * daysdiff)
+                    later_pay_value.value = Number(later_pay_value.value) + (15 * daysdiff)
+                    total_text.innerText = Number(total_value.value) + (15 * daysdiff);
+                    total_value.value = Number(total_value.value) + (15 * daysdiff);
+                }
+                if (checkBox5.checked) {
+                    let later_pay_text = document.getElementById('pendingamounttext')
+                    let later_pay_value = document.getElementById('later_pay')
+                    let total_text = document.getElementById('completeamounttext')
+                    let total_value = document.getElementById('total_amount1')
+                    later_pay_text.innerText = Number(later_pay_value.value) + (15 * daysdiff)
+                    later_pay_value.value = Number(later_pay_value.value) + (15 * daysdiff)
+                    total_text.innerText = Number(total_value.value) + (15 * daysdiff);
+                    total_value.value = Number(total_value.value) + (15 * daysdiff);
+                }
+                if (checkBox6.checked) {
+                    let later_pay_text = document.getElementById('pendingamounttext')
+                    let later_pay_value = document.getElementById('later_pay')
+                    let total_text = document.getElementById('completeamounttext')
+                    let total_value = document.getElementById('total_amount1')
+                    later_pay_text.innerText = Number(later_pay_value.value) + (40 * daysdiff)
+                    later_pay_value.value = Number(later_pay_value.value) + (40 * daysdiff)
+                    total_text.innerText = Number(total_value.value) + (40 * daysdiff);
+                    total_value.value = Number(total_value.value) + (40 * daysdiff);
+                }
+
+
+            } else {
+                disc_id.style.display = 'none'
+                later_pay_text.innerText = 0
+                later_pay_value.value = 0
+                now_pay_text.innerText = 2 * {{ cars.unit_price }};
+                now_pay_value.value = 2 * {{ cars.unit_price }};
+                total_text.innerText = daysdiff * {{ cars.unit_price }};
+                total_value.value = daysdiff * {{ cars.unit_price }};
+            }
         }
 
         {#----------------------#}
-        $('.pradio').on('change', function () {
-            alert(this.value)
-            document.getElementById('pickup_air_terminal').value = this.value
-        })
+
 
 
         function checkloc() {
@@ -2064,7 +2160,7 @@
                     alert.style.display = 'none'
                     return_door_checker = 1
                 }
-            }else{
+            } else {
                 return_door_checker = 1
             }
 
@@ -2084,7 +2180,7 @@
                     alert.style.display = 'none'
                     pickup_door_checker = 1
                 }
-            }else{
+            } else {
                 pickup_door_checker = 1
             }
 
@@ -2092,7 +2188,6 @@
             if (pcounter === 1 && rcounter === 1 && return_door_checker === 1 && pickup_door_checker === 1) {
                 document.getElementById('myForm').submit()
             }
-
 
 
             function Position(obj) {
@@ -2105,7 +2200,7 @@
                 }
             }
 
-        }
+        }}}
 
     </script>
 
