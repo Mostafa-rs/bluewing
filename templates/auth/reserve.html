@@ -1582,7 +1582,7 @@
 
                                                     <div class="order_row total">
                                                         <h5>مبلغی که الان می بایست واریز شود</h5>
-                                                        <input type="text" id="now_pay" name="now_paid_amount"
+                                                        <input type="hidden" id="now_pay" name="now_paid_amount"
                                                                value="" autocomplete="off">
                                                         <h5 id="total_be_paid">{% widthratio cars.unit_price 1 2 %}</h5>
 
@@ -1590,14 +1590,14 @@
                                                     <div class="order_row total">
 
                                                         <h5>مبلغی که بعدا در محل (در دبی) واریز می شود</h5>
-                                                        <input type="text" id="later_pay" name="later_paid_amount"
+                                                        <input type="hidden" id="later_pay" name="later_paid_amount"
                                                                value="0" autocomplete="off">
                                                         <h5 id="pendingamounttext">0</h5>
                                                     </div>
                                                 </div>
                                                 <div class="order_row total">
                                                     <h5>مبلغ کل</h5>
-                                                    <input type="text" id="total_amount1" name="paid_amount"
+                                                    <input type="hidden" id="total_amount1" name="paid_amount"
                                                            value="0"
                                                            autocomplete="off">
                                                     <h5 id="completeamounttext"></h5>
@@ -1629,22 +1629,31 @@
         </div>
 
     </section>
+
+
+
+{% endblock %}
+
+{% block js %}
+
     <script>
+        let duration = {{ times.duration }}
         document.getElementById('completeamounttext').innerText = {{ times.total_cost }} * 105 / 100;
         let complete_amount = Number(document.getElementById('completeamounttext').innerText);
         document.getElementById('total_amount1').value = complete_amount;
-        if ({{ times.duration }} > 2){
+        document.getElementById('now_pay').value =
+        {{ cars.unit_price }} *
+        2
+        if (duration > 2){
             document.getElementById('later_pay').value = (({{ times.duration }} * {{ cars.unit_price }}) - (2 * {{ cars.unit_price }}))+({{ times.duration }} * {{ cars.unit_price }} * 5 / 100);
             document.getElementById('pendingamounttext').innerText = (({{ times.duration }} * {{ cars.unit_price }}) - (2 * {{ cars.unit_price }}))+({{ times.duration }} * {{ cars.unit_price }} * 5 / 100);
         }
         else
         {
             document.getElementById('later_pay').value = 0
-            document.getElementById('pendingamounttext').innerText = 0
+            document.getElementById('pendingamounttext').innerText = Number(document.getElementById('now_pay').value) * 5 / 100
         }
-        document.getElementById('now_pay').value =
-        {{ cars.unit_price }} *
-        2
+
 
 
         if (document.getElementById('cbx3797').checked) {
@@ -1842,6 +1851,9 @@
             return document.getElementById("result_r5").innerHTML = result5;
         }
 
+
+
+
         function myFunction6() {
             var completeAmountText = Number(document.getElementById("completeamounttext").innerText);
             var timesDuration = Number(document.getElementById("times_duration").value);
@@ -1849,10 +1861,10 @@
             var checkBox6 = document.getElementById("r6");
             var result6 = 0;
             var result66 = 0;
-            let daysdiff = document.getElementById()
+            let daysdiff = document.getElementById('days').value
             var pendingamount = Number(document.getElementById("pendingamounttext").innerText);
 
-            if (checkBox6.checked == true) {
+            if (checkBox6.checked === true) {
                 var lg6 = Number(document.getElementById("r6").value);
                 result6 = lg6;
                 completeAmount = completeAmountText + result6;
@@ -1879,7 +1891,7 @@
 
             }
             return document.getElementById("result_r6").innerHTML = result6;
-        }
+         }
 
         {#----------------------#}
 
@@ -2200,7 +2212,7 @@
                 }
             }
 
-        }}}
+        }
 
     </script>
 

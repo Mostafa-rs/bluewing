@@ -13,7 +13,7 @@ def order_details(request):
             update_order = form.save(commit=False)
             update_order.nationality = request.POST['id_nationality']
             update_order.save()
-            return redirect('home:home')
+            return render(request, 'auth/done-order.html')
     else:
         form = OrderForm()
     return render(request,'auth/order.html', {'form': form})

@@ -121,20 +121,42 @@ class Times(models.Model):
             11:30,
             12:31
         }
-        if self.return_time.minute == self.pickup_time.minute and self.return_time.hour == self.pickup_time.hour or\
-                self.return_time < self.pickup_time:
-            if self.pickup_date.month == self.return_date.month:
-                return int(self.return_date.day) - int(self.pickup_date.day)
-            else:
-                result = MONTHS[self.pickup_date.month] - self.pickup_date.day + self.return_date.day
+        if self.pickup_date.year == self.return_date.year:
+            if self.return_time.minute == self.pickup_time.minute and self.return_time.hour == self.pickup_time.hour or\
+                    self.return_time < self.pickup_time:
+                if self.pickup_date.month == self.return_date.month:
+                    return int(self.return_date.day) - int(self.pickup_date.day)
+                else:
+                    result = MONTHS[self.pickup_date.month] - self.pickup_date.day + self.return_date.day
+                    return int(result)
+            elif self.return_time > self.pickup_time:
+                if self.pickup_date.month == self.return_date.month:
+                    return int(self.return_date.day) - int(self.pickup_date.day) + 1
+                else:
+                    result = MONTHS[self.pickup_date.month] - self.pickup_date.day + self.return_date.day + 1
+                    return int(result)
+        elif self.pickup_date.year < self.return_date.year:
+            if self.return_time.minute == self.pickup_time.minute and self.return_time.hour == self.pickup_time.hour or\
+                    self.return_time < self.pickup_time:
+                result = MONTHS[self.pickup_date.month] - self.pickup_date.day
+                for k, v in MONTHS.items():
+                    if k > self.pickup_date.month:
+                        result += v
+                for k, v in MONTHS.items():
+                    if k < self.pickup_date.month:
+                        result += v
                 return int(result)
-        elif self.return_time > self.pickup_time:
-            if self.pickup_date.month == self.return_date.month:
-                return int(self.return_date.day) - int(self.pickup_date.day) + 1
-            else:
-                result = MONTHS[self.pickup_date.month] - self.pickup_date.day + self.return_date.day + 1
-                return int(result)
-
+            elif self.return_time > self.pickup_time:
+                result = MONTHS[self.pickup_date.month] - self.pickup_date.day
+                for k, v in MONTHS.items():
+                    if k > self.pickup_date.month:
+                        result += v
+                for k, v in MONTHS.items():
+                    if k < self.return_date.month:
+                        result += v
+                    elif k == self.return_date.month:
+                        result += self.return_date.day
+                return int(result + 1)
     @property
     def total_cost(self):
         self.cost = self.duration * self.car.unit_price

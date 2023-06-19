@@ -405,12 +405,12 @@
                                      data-ubound="{{ max_price }}">
                                     <hr>
                                     <input type="range" name="price_1" min="{{ min_price }}"
-                                           max="{{ max_price }}" step="50"
+                                           max="{{ max_price }}" step="1"
                                            value="{{ min_price }}"
                                            oninput="this.parentNode.dataset.lbound=this.value;">
 
                                     <input type="range" name="price_2" min="{{ min_price }}"
-                                           max="{{ max_price }}" step="50"
+                                           max="{{ max_price }}" step="1"
                                            value="{{ max_price }}"
                                            oninput="this.parentNode.dataset.ubound=this.value;">
                                 </div>
@@ -424,6 +424,24 @@
                                             </label>
                                         </li>
                                     </ul>
+                                </div>
+
+                                <div class="vehicles-type">
+                                    <h5 class="view-title-style" style="color: #fff">نوع وسایل نقلیه براساس استایل</h5>
+
+                                    <ul class="vehicle-type-list">
+                                        <li>
+                                            <label class="filter_brand">
+                                                {{ filter.form.category }}
+                                            </label>
+                                        </li>
+                                    </ul>
+                                </div>
+
+
+
+                                <div class="hidden">
+                                    {{ filter.form.price }}
                                 </div>
 
                                 <button type="submit" class="btn-info search-price"
@@ -485,6 +503,15 @@
                     {#                        </ul>#}
                     {#                    </div>#}
                     <form action="">
+                        <div class="hidden">
+                            {{ filter.form.price_1 }}
+                            {{ filter.form.price_2 }}
+                            {{ filter.form.brand }}
+                            {{ filter.form.category }}
+                        </div>
+
+
+
                         <div class="vehicles-type">
                             <h5 class="view-title-style">بر اساس گران ترین و ارزان ترین</h5>
 

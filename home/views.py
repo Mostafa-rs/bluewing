@@ -42,10 +42,10 @@ def about_us(request):
 
 def all_cars(request, slug=None, id=None):
     cars = Car.objects.all()
-    min = Car.objects.aggregate(unit_price=Min('unit_price'))
-    min_price = int(min['unit_price'])
-    max = Car.objects.aggregate(unit_price=Max('unit_price'))
-    max_price = int(max['unit_price'])
+    min_p = Car.objects.aggregate(unit_price=Min('unit_price'))
+    min_price = int(min_p['unit_price'])
+    max_p = Car.objects.aggregate(unit_price=Max('unit_price'))
+    max_price = int(max_p['unit_price'])
 
     filter = CarsFilter(request.GET, queryset=cars)
     cars = filter.qs

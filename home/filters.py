@@ -14,6 +14,7 @@ class CarsFilter(django_filters.FilterSet):
     price_1 = django_filters.NumberFilter(field_name='unit_price', lookup_expr='gte')
     price_2 = django_filters.NumberFilter(field_name='unit_price', lookup_expr='lte')
     brand = django_filters.ModelMultipleChoiceFilter(queryset=Brand.objects.all(), widget=forms.CheckboxSelectMultiple)
+    category = django_filters.ModelMultipleChoiceFilter(queryset=Category.objects.filter(sub_cat=False), widget=forms.CheckboxSelectMultiple)
     price = django_filters.ChoiceFilter(choices=choice_1,method='price_filter')
 
 
